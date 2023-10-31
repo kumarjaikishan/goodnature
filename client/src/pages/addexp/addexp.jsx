@@ -97,7 +97,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
 
   // for creating/inserting data
   const sub = async () => {
-   
+
     let { ledger, date, amount, narration } = inp;
     narration = cap(narration);
     const userid = localStorage.getItem("id");
@@ -107,7 +107,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
       setTimeout(() => {
         dvd.classList.remove("shake");
       }, 420);
-       console.log(dvd)
+      console.log(dvd)
       setloader(false);
       return notification.warn("Kindly Fill all Fields", 2100)
     } else {
@@ -350,7 +350,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
                   </tr>
                 )
               })}
-             
+
             </tbody>
             <tfoot>
               <tr id="foot">
@@ -358,9 +358,12 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
                 <th colSpan="1" >Total</th>
                 <th colSpan="1" id="totalhere">
                   {
-                    currentpost.reduce((accu, val, ind) => {
+                    currentpost.filter((item) => {
+                      return serinp.toLowerCase() === "" ? item : item.narration.toLowerCase().includes(serinp) || item.ledger.toLowerCase().includes(serinp);
+                    }).reduce((accu, val, ind) => {
                       return accu = accu + val.amount;
                     }, 0)
+
                   }
 
                 </th>
