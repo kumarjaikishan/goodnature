@@ -13,7 +13,6 @@
     align-items: center;
     padding: 0px 20px;
     /* font-family:Arial */
-
 }
 
 .nav .cont {
@@ -91,10 +90,11 @@
 @media only screen and (max-width: 600px) {
 
     .nav .info {
-       transform: translateX(250px);
+       transform: translateX(250px) scale(0.8);
     }
 
     .nav.narrow .info {
-        transform: translateX(0px);
+        transform: translateX(0px) scale(0.8);
+        
     }
 }
