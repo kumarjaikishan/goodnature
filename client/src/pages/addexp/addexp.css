@@ -90,6 +90,7 @@
     border-collapse: collapse;
 }
 
+
 .exp .table table th,
 .exp .table table td {
     border: 1px solid rgb(190, 185, 185);
@@ -99,8 +100,21 @@
 .exp .table table thead th,
 .exp .table table #foot th {
     height: 30px;
-    color: #0984e3;
+    /* color: #0984e3; */
 }
+.exp .table table thead,
+.exp .table table #foot {
+    position: sticky;
+    background:#0984e3;
+    color: whitesmoke;
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.3);
+ }
+ .exp .table table #foot{
+   bottom: 5px;
+ }
+ .exp .table table thead{
+    top: 0;
+ }
 
 .exp .table table th:nth-child(1),
 .exp .table table th:nth-child(6),
