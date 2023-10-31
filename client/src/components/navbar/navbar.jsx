@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './navbar.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink } from 'react-router-dom';
+import { convertLength } from '@mui/material/styles/cssUtils';
 
 const Navbar = ({ login, narrow, setnarrow, heade ,imgine}) => {
   const username = localStorage.getItem("name");
@@ -9,10 +10,12 @@ const Navbar = ({ login, narrow, setnarrow, heade ,imgine}) => {
   const fun = () => {
     if (narrow) {
       setnarrow(false)
+    
     } else {
       setnarrow(true)
     }
   }
+  
   return (
     <>
       <div className={narrow ? "nav narrow" : "nav"}>

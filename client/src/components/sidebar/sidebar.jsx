@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './sidebar.css';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,9 @@ import GrassIcon from '@mui/icons-material/Grass';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Sidebar = ({ narrow, setheade, login, isadmin }) => {
+const Sidebar = ({ narrow, setheade, login, isadmin,setnarrow }) => {
     let navigate = useNavigate();
+   
     const notify = (msg, dur) => {
         toast.success(msg, {
             autoClose: dur,
@@ -52,7 +53,7 @@ const Sidebar = ({ narrow, setheade, login, isadmin }) => {
     return (
         <>
             <ToastContainer />
-            <div className={narrow ? "sidebar narrow" : "sidebar"}>
+            <div  className={narrow ? "sidebar narrow" : "sidebar"}>
                 <div className="clogo">
                     <NavLink className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to='/' > <span className="li" ><span className="logo"> <GrassIcon className='company' /></span><span className="name">Accusoft</span></span></NavLink>
                 </div>
@@ -72,7 +73,7 @@ const Sidebar = ({ narrow, setheade, login, isadmin }) => {
                         )
                     }) : null}
                     {login ? isadmin ?
-                        <NavLink  className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to="/admin" >
+                        <NavLink className={(navData) => (navData.isActive ? 'active' : '')} style={{ textDecoration: 'none' }} to="/admin" >
                             <span className="li" onClick={() => setheade("Admin")}>
                                 <span className="logo">
                                     <i title={"Admin"} className="fa fa-lock" aria-hidden="true"></i>
