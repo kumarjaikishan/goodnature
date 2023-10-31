@@ -244,25 +244,30 @@
 
     .exp .head span:nth-child(2) select,
     .exp .head span:nth-child(3) input {
-        width: 80px;
+        width: 110px;
         height: 30px;
     }
 
     .exp .head span:nth-child(3) input {
-        width: 140px;
+        width: 170px;
     }
     .exp .table th{
         font-size: 12px;
     }
-    .exp .table td{
-        font-size: 9px;
+    .exp .table #tablecontent {
+        font-size: 0.6em;
     }
 
     .exp .foot {
-        height: 50px;
+        height: 80px;
         padding: 0px 5px;
         display: flex;
-        font-size: 12px;
+        font-size: 10px;
     }
-
+    .exp .foot .pages {
+        margin: 0 2px;
+        width: 25px;
+        height: 18px;
+        line-height: 17px;
+    }
 }

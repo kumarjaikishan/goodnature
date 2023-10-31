@@ -350,6 +350,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
                   </tr>
                 )
               })}
+             
             </tbody>
             <tfoot>
               <tr id="foot">
