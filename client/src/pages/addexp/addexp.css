@@ -88,7 +88,6 @@
 .exp .table table {
     width: 100%;
     border-collapse: collapse;
-
 }
 
 .exp .table table th,
@@ -230,14 +229,19 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .exp {
+        padding: 0 15px;
+    }
     .exp .head {
         width: 100%;
         height: 80px;
         font-size: 14px;
     }
-    .exp .head span:nth-child(1){
-display: none;
+
+    .exp .head span:nth-child(1) {
+        display: none;
     }
+
     .exp .head span:nth-child(2) select,
     .exp .head span:nth-child(3) input {
         width: 80px;
@@ -247,6 +251,13 @@ display: none;
     .exp .head span:nth-child(3) input {
         width: 140px;
     }
+    .exp .table th{
+        font-size: 12px;
+    }
+    .exp .table td{
+        font-size: 9px;
+    }
+
     .exp .foot {
         height: 50px;
         padding: 0px 5px;

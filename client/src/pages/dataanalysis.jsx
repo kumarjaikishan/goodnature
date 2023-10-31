@@ -9,7 +9,7 @@ const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
 
     const date = new Date;
     const today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getUTCDate();
-//    console.log(date.getFullYear());
+    //    console.log(date.getFullYear());
     const [inp, setinp] = useState({
         date: today,
         month: date.getMonth(),
@@ -126,6 +126,7 @@ const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
                             </div>
                         )
                     })}
+                    
                 </div>
             </div>
         </>

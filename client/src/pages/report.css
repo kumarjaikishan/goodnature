@@ -259,4 +259,13 @@
         padding: 4px 2px;
         margin: 0 4px;
     }
+    .report .table {
+        padding: 5px 8px;
+    }
+    .report .table #table th{
+      font-size: 12px;
+    }
+    .report .table td{
+        font-size: 8px;
+    }
 }

@@ -119,7 +119,6 @@ const Report = ({ leddetail, login, setloader, expenselist }) => {
                     </span>
                 </div>
                 <div className="table" >
-
                     <table id='tavlecontent'>
                         <thead id='table'>
                             <tr>
