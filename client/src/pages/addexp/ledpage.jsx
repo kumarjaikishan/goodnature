@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
 import './ledpage.css';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Ledpage = ({ notification, fetching, setmodal, leddetail, setleddetail, isledupdate, setisledupdate }) => {
+  const log = useSelector((state) => state.login);
   const [isupda, setinsupdat] = useState(false)
   const [ledinp, setledinp] = useState({
     ind: "",
     val: ""
   })
   useEffect(() => {
-    upde();
-  }, [leddetail])
+    
+  }, [])
 
   const upde = async () => {
     const _id = localStorage.getItem("id");
     // console.log(leddetail)
-    if (leddetail.length < 1) {
+    if (log.ledger[0].length < 1) {
       return notification.warn("Ledger Can't be blank", 2000)
     } else {
       const res = await fetch('/leg', {

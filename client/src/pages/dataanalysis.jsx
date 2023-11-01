@@ -3,13 +3,16 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import './dataanalysis.css';
 import { useNavigate } from "react-router-dom";
+import { useSelector,useDispatch } from 'react-redux';
+import { setloader } from '../store/login';
 
-const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
+const Datanalysis = ({ leddetail }) => {
     let navigate = useNavigate();
-
+    const dispatch = useDispatch();
+    const log = useSelector((state) => state.login);
     const date = new Date;
     const today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getUTCDate();
-    //    console.log(date.getFullYear());
+//    console.log(date.getFullYear());
     const [inp, setinp] = useState({
         date: today,
         month: date.getMonth(),
@@ -18,11 +21,11 @@ const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
     const [cardarr, setcardarr] = useState([]);
     const temparr = [];
     useEffect(() => {
-        if (!login) {
+        if (!log.user) {
             navigate('/login');
             return;
-        }
-        // setloader(true);
+          }
+          dispatch(setloader(true));
         fcuk();
     }, [inp])
 
@@ -32,7 +35,7 @@ const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
         const startdate = inp.year + "-" + monthIn2Digit + "-01";
         const enddate = inp.year + "-" + monthIn2Digit + "-31";
         //  alert(startdate + "  : "+ enddate);
-        const temp = expenselist.filter((val, ind) => {
+        const temp = log.explist[0].filter((val, ind) => {
             if (val.date >= startdate && val.date <= enddate) {
                 return val;
             }
@@ -76,7 +79,7 @@ const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
         })
         // console.log(temparr);
         setcardarr(temparr);
-        // setloader(false);
+        dispatch(setloader(false));
     }
 
     const monname = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -126,7 +129,6 @@ const Datanalysis = ({ setloader, login, expenselist, leddetail }) => {
                             </div>
                         )
                     })}
-                    
                 </div>
             </div>
         </>

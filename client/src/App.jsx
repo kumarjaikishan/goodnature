@@ -14,17 +14,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Photo from './pages/photo';
 import Admin from './pages/Admin';
+import { useSelector,useDispatch } from 'react-redux';
+import { setnarrow } from '../src/store/login';
+import Officeexp from './pages/officeexp';
 
 function App() {
+  const dispatch = useDispatch();
   const [leddetail, setleddetail] = useState([]);
-  const [expenselist, setexpenselist] = useState([]);
-  const [login, setlogin] = useState(false);
-  const [loader, setloader] = useState(false);
-  const [narrow, setnarrow] = useState(true);
-  const [heade, setheade] = useState("LogIn");
   const [imgine, setimgine] = useState("just.png");
-  const [isadmin, setisadmin] = useState(false);
 
+  const log = useSelector((state) => state.login);
   const notification = {
     success: (msg, dur) => {
       toast.success(msg, {
@@ -42,7 +41,7 @@ function App() {
   const sidebarclose = () => {
     const width = window.innerWidth;
     // console.log(width)
-    width < 600 ? setnarrow(true) : null;
+    width < 600 ?  dispatch(setnarrow(true)) : null;
   }
  
 
@@ -51,22 +50,23 @@ function App() {
       <ToastContainer />
 
       <div className="App" >
-        <Navbar login={login} imgine={imgine} narrow={narrow} heade={heade} setnarrow={setnarrow} />
-        <div className={narrow ? "main narrow" : "main"} onClick={sidebarclose}>
+        <Navbar  imgine={imgine}  />
+        <div className={log.narrow ? "main narrow" : "main"} onClick={sidebarclose}>
           <Routes>
 
-            <Route path="/" element={<Home login={login} expenselist={expenselist} setheade={setheade} setloader={setloader} />} />
-            <Route path="/addexpense" element={<Addexp notification={notification} setexpenselist={setexpenselist} expenselist={expenselist} login={login} setleddetail={setleddetail} leddetail={leddetail} setloader={setloader} />} />
-            <Route path="/datanalysis" element={<Datanalysis leddetail={leddetail} expenselist={expenselist} login={login} setloader={setloader} />} />
-            <Route path="/report" element={<Report expenselist={expenselist} leddetail={leddetail} login={login} setloader={setloader} />} />
-            <Route path="/photo" element={<Photo setimgine={setimgine} setheade={setheade} login={login} notification={notification} />} />
-            <Route path="/login" element={<Login setisadmin={setisadmin} setimgine={setimgine} setexpenselist={setexpenselist} setleddetail={setleddetail} setlogin={setlogin} setloader={setloader} notification={notification} />} />
-            <Route path="/logout" element={<Logout setleddetail={setleddetail} setlogin={setlogin} />} />
-            <Route path="/admin" element={<Admin notification={notification} setexpenselist={setexpenselist} expenselist={expenselist} login={login} setleddetail={setleddetail} leddetail={leddetail} setloader={setloader} />} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/addexpense" element={<Addexp notification={notification}  setleddetail={setleddetail} leddetail={leddetail} />} />
+              <Route path="/datanalysis" element={<Datanalysis leddetail={leddetail}  />} />
+              <Route path="/report" element={<Report  leddetail={leddetail}  />} />
+              <Route path="/photo" element={<Photo setimgine={setimgine} notification={notification} />} />
+              <Route path="/login" element={<Login  setimgine={setimgine}  setleddetail={setleddetail} notification={notification} />} />
+              <Route path="/logout" element={<Logout setleddetail={setleddetail}  />} />
+              <Route path="/admin" element={<Admin notification={notification}   setleddetail={setleddetail} leddetail={leddetail} />} />
+              <Route path="/print" element={<Officeexp/>} />
           </Routes>
-          <div style={{ display: loader ? "flex" : "none" }} className="loader"><img src={loadere} alt="" /></div>
+          <div style={{ display: log.loader ? "flex" : "none" }} className="loader"><img src={loadere} alt="" /></div>
         </div>
-        <Sidebar isadmin={isadmin} login={login} setnarrow={setnarrow} narrow={narrow} setheade={setheade} />
+        <Sidebar />
       </div>
     </>
   );

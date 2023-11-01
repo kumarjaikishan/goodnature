@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import './photo.css';
-const Photo = ({notification,login,setheade,setimgine}) => {
+import { useSelector,useDispatch } from 'react-redux';
+import { header,setloader } from '../store/login';
+
+const Photo = ({notification,setimgine}) => {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const log = useSelector((state) => state.login);
     useEffect(() => {
-        if (!login) {
-          navigate('/login');
-          return;
-        }
-        setheade("Dashboard");
+        if (!log.user) {
+            navigate('/login');
+            return;
+          }
+          dispatch(header("Dashboard"))
         // setloader(true);
       }, [])
     const WIDTH = 200;

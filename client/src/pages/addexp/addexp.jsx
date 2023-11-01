@@ -6,12 +6,15 @@ import Pagination from './pagination';
 import Modalbox from './modalbox';
 import Ledpage from './ledpage';
 import { useNavigate } from "react-router-dom";
+import { useSelector,useDispatch } from 'react-redux';
 
 
-const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, expenselist, notification }) => {
+const Addexp = ({ leddetail, setleddetail,  notification }) => {
   let navigate = useNavigate();
+  const log = useSelector((state) => state.login);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (!login) {
+    if (!log.user) {
       navigate('/login');
       return;
     }
@@ -43,7 +46,6 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
   }
   const [isledupdate, setisledupdate] = useState(false);
   const [inp, setinp] = useState(init);
-  const [expdata, setexpdata] = useState(expenselist);
   const [currentpage, setcurrentpage] = useState(1);
   const [postperpage, setpostperpage] = useState(10);
 
@@ -64,9 +66,8 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
         })
       })
       const datae = await result.json();
-      setloader(false);
-      setexpdata(datae.data)
-      setexpenselist(datae.data);
+      dispatch(setloader(false));
+      dispatch(setexplist(datae.data));
     }
   }
   // for LOading data ends here
@@ -108,10 +109,10 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
         dvd.classList.remove("shake");
       }, 420);
       console.log(dvd)
-      setloader(false);
+      dispatch(setloader(false));
       return notification.warn("Kindly Fill all Fields", 2100)
     } else {
-      setloader(true)
+      dispatch(setloader(true));
       const result = await fetch('/addexpense', {
         method: "POST",
         headers: {
@@ -133,7 +134,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
 
   //  fecthing data for edit
   const edit = async (val) => {
-    setloader(true);
+    dispatch(setloader(true));
     const result = await fetch('/data', {
       method: "POST",
       headers: {
@@ -148,7 +149,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
     setinp(datae.data[0]);
     setisupdate(true);
     setmodal(true);
-    setloader(false);
+    dispatch(setloader(false));
   }
   //  fecthing data for edit ends here
 
@@ -163,7 +164,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
     })
       .then(async (willDelete) => {
         if (willDelete) {
-          setloader(true);
+          dispatch(setloader(true));
           const result = await fetch('/addexpense', {
             method: "DELETE",
             headers: {
@@ -197,7 +198,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
     })
       .then(async (willDelete) => {
         if (willDelete) {
-          setloader(true);
+          dispatch(setloader(true));
           const arr = [];
           for (let i = 0; i < item.length; i++) {
             if (item[i].checked == true) {
@@ -288,8 +289,7 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
   let lastpostindex = currentpage * postperpage;
   const firstpostindex = lastpostindex - postperpage;
 
-  const currentpost = expdata.slice(firstpostindex, lastpostindex);
-
+  const currentpost = log.explist[0].slice(firstpostindex, lastpostindex);
 
   let sum = 0;
   return (
@@ -375,9 +375,9 @@ const Addexp = ({ setexpenselist, login, setloader, leddetail, setleddetail, exp
           </table>
         </div>
         <div className="foot">
-          <span>Showing Result From {firstpostindex + 1} To {lastpostindex >= expdata.length ? lastpostindex = expdata.length : lastpostindex} of  {expdata.length} Results</span>
+          <span>Showing Result From {firstpostindex + 1} To {lastpostindex >= log.explist[0].length ? lastpostindex = log.explist[0].length : lastpostindex} of  {log.explist[0].length} Results</span>
           <span>Pages :
-            <Pagination currentpage={currentpage} changepageno={changepageno} totalpost={expdata.length} postperpage={postperpage} />
+            <Pagination currentpage={currentpage} changepageno={changepageno} totalpost={log.explist[0].length} postperpage={postperpage} />
           </span>
         </div>
         <Modalbox notification={notification} setisledupdate={setisledupdate} leddetail={leddetail} fetching={fetching} init={init} setinp={setinp} setisupdate={setisupdate} setmodal={setmodal} sub={sub} modal={modal} handler={handler} inp={inp} isupdate={isupdate} />

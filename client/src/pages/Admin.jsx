@@ -5,16 +5,20 @@ import swal from 'sweetalert';
 import Pagination from './addexp/pagination';
 import Modalbox from './addexp/modalbox';
 import { useNavigate } from "react-router-dom";
+import { useSelector,useDispatch } from 'react-redux';
+import { setloader,setexplist } from '../store/login';
 
 
-const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expenselist, notification }) => {
+const Admin = ({  leddetail, notification }) => {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const log = useSelector((state) => state.login);
     useEffect(() => {
-        if (!login) {
+        if (!log.user) {
             navigate('/login');
             return;
         }
-        // setloader(true)
+        // dispatch(setloader(true));
         fetche();
     }, [])
 
@@ -23,9 +27,8 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
             method: "GET"
         })
         const data = await result.json();
-        console.log(data.explist);
-        setexpdata(data.explist);
-        setloader(false);
+        // console.log(data.explist);
+        dispatch(setloader(false));
     }
 
     const date = new Date;
@@ -51,7 +54,6 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
     }
     const [isledupdate, setisledupdate] = useState(false);
     const [inp, setinp] = useState(init);
-    const [expdata, setexpdata] = useState(expenselist);
     const [currentpage, setcurrentpage] = useState(1);
     const [postperpage, setpostperpage] = useState(10);
 
@@ -72,16 +74,16 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
                 })
             })
             const datae = await result.json();
-            setloader(false);
-            setexpdata(datae.data)
-            setexpenselist(datae.data);
+            dispatch(setloader(false));
+            dispatch(setexplist(datae.data));
+           
         }
     }
     // // for LOading data ends here
 
     // for creating/inserting data
   const sub = async () => {
-    setloader(true)
+    dispatch(setloader(true));
     let { ledger, date, amount, narration } = inp;
     narration = cap(narration);
     const userid = localStorage.getItem("id");
@@ -132,7 +134,7 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
 
     //  fecthing data for edit
     const edit = async (val) => {
-        setloader(true);
+        dispatch(setloader(true));
         const result = await fetch('/data', {
             method: "POST",
             headers: {
@@ -147,7 +149,7 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
         setinp(datae.data[0]);
         setisupdate(true);
         setmodal(true);
-        setloader(false);
+        dispatch(setloader(false));
     }
     //  fecthing data for edit ends here
 
@@ -162,7 +164,7 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
         })
             .then(async (willDelete) => {
                 if (willDelete) {
-                    setloader(true);
+                    dispatch(setloader(true));
                     const result = await fetch('/addexpense', {
                         method: "DELETE",
                         headers: {
@@ -196,7 +198,7 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
         })
             .then(async (willDelete) => {
                 if (willDelete) {
-                    setloader(true);
+                    dispatch(setloader(true));
                     const arr = [];
                     for (let i = 0; i < item.length; i++) {
                         if (item[i].checked == true) {
@@ -287,7 +289,7 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
     let lastpostindex = currentpage * postperpage;
     const firstpostindex = lastpostindex - postperpage;
 
-    const currentpost = expdata.slice(firstpostindex, lastpostindex);
+    const currentpost = log.explist[0].slice(firstpostindex, lastpostindex);
 
 
     let sum = 0;
@@ -370,9 +372,9 @@ const Admin = ({ setexpenselist, login, setloader, leddetail, setleddetail, expe
                     </table>
                 </div>
                 <div className="foot">
-                    <span>Showing Result From {firstpostindex + 1} To {lastpostindex >= expdata.length ? lastpostindex = expdata.length : lastpostindex} of  {expdata.length} Results</span>
+                    <span>Showing Result From {firstpostindex + 1} To {lastpostindex >= log.explist[0].length ? lastpostindex = log.explist[0].length : lastpostindex} of  {log.explist[0].length} Results</span>
                     <span>Pages :
-                        <Pagination currentpage={currentpage} changepageno={changepageno} totalpost={expdata.length} postperpage={postperpage} />
+                        <Pagination currentpage={currentpage} changepageno={changepageno} totalpost={log.explist[0].length} postperpage={postperpage} />
                     </span>
                 </div>
                 <Modalbox notification={notification} setisledupdate={setisledupdate} leddetail={leddetail} fetching={fetching} init={init} setinp={setinp} setisupdate={setisupdate} setmodal={setmodal} sub={sub} modal={modal} handler={handler} inp={inp} isupdate={isupdate} />

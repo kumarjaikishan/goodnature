@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import swal from 'sweetalert'
 import './modalbox.css';
+import { useSelector } from 'react-redux';
 
-const Modalbox = ({ notification, setisledupdate, leddetail, modal, fetching, init, handler, inp, isupdate, sub, setmodal, setisupdate, setinp }) => {
+const Modalbox = ({ notification, setisledupdate, modal, fetching, init, handler, inp, isupdate, sub, setmodal, setisupdate, setinp }) => {
 
     const [ledarr, setledarr] = useState([]);
+    const log = useSelector((state) => state.login);
     // for updating data fetched above 
     const updatee = async (_id) => {
         const { ledger, date, amount, narration } = inp;
@@ -47,7 +49,7 @@ const Modalbox = ({ notification, setisledupdate, leddetail, modal, fetching, in
                     <span>Ledger :</span>
                     <span>
                         <select className='caps' name="ledger" id="" onChange={handler} value={inp.ledger} >
-                            {leddetail.map((val, ind) => {
+                            {log.ledger[0].map((val, ind) => {
                                 return <option className='erffeg' key={ind} value={val}>{val}</option>
                             })}
                         </select>

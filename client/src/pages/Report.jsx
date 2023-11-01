@@ -3,16 +3,20 @@ import { useEffect } from 'react';
 import './report.css';
 import { useNavigate } from "react-router-dom";
 import { CSVLink } from 'react-csv';
+import { useSelector,useDispatch } from 'react-redux';
+import { setloader } from '../store/login';
 
-const Report = ({ leddetail, login, setloader, expenselist }) => {
+const Report = ({ leddetail }) => {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const log = useSelector((state) => state.login);
     useEffect(() => {
-        if (!login) {
+        if (!log.user) {
             navigate('/login');
             return;
-        }
-        setloader(true)
-        setexplist(expenselist);
+          }
+        dispatch(setloader(true));
+        setexplist(log.explist[0]);
         fetching();
     }, [])
     const header = [
@@ -54,8 +58,8 @@ const Report = ({ leddetail, login, setloader, expenselist }) => {
     }
     // for LOading data
     const fetching = async () => {
-        setpious(expenselist)
-        setloader(false);
+        setpious(log.explist[0])
+        dispatch(setloader(false));
     }
     // for LOading data ends here
 
@@ -119,6 +123,7 @@ const Report = ({ leddetail, login, setloader, expenselist }) => {
                     </span>
                 </div>
                 <div className="table" >
+
                     <table id='tavlecontent'>
                         <thead id='table'>
                             <tr>

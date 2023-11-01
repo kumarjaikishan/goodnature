@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import './home.css';
 import { useNavigate } from "react-router-dom";
+import { useSelector,useDispatch } from 'react-redux';
+import { header,setloader } from '../store/login';
 
-const Home = ({ setloader, login, setheade, expenselist }) => {
+const Home = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const log = useSelector((state) => state.login);
   useEffect(() => {
-    if (!login) {
+    if (!log.user) {
       navigate('/login');
       return;
     }
-    setloader(true);
+    // dispatch(setloader(true));
     load();
-    setheade("Dashboard");
+    dispatch(header("Dashboard"))
   }, [])
 
 
@@ -50,7 +54,7 @@ const Home = ({ setloader, login, setheade, expenselist }) => {
   let yearsum = 0;
   let totalsum = 0;
   const load = () => {
-    expenselist.map((val, ind) => {
+    log.explist[0].map((val, ind) => {
       if (val.date == today) {
         todaysum = todaysum + val.amount
       }
@@ -78,7 +82,7 @@ const Home = ({ setloader, login, setheade, expenselist }) => {
       totalsum:totalsum
     })
     // console.log(yearsum);
-    setloader(false);
+    dispatch(setloader(false));
   }
   const card = [{
     amt: arr.todaysum,

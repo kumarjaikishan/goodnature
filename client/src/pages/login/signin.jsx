@@ -1,19 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { login,setloader,setadmin,setexplist,setledger } from '../../store/login';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import {useDispatch } from 'react-redux';
 
-const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notification, setimgine ,setisadmin}) => {
+const Signin = ({  setleddetail,  notification, setimgine }) => {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
     const init = {
         email: "",
         password: ""
-    }
-
+    } 
+    useEffect(() => {
+        dispatch(setloader(false));
+       }, [])
     const [signinp, setsigninp] = useState(init);
     const [loginpass, setloginpass] = useState(true);
     const [btnclick, setbtnclick] = useState(false);
@@ -27,7 +32,7 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
     }
 
     const submit = async () => {
-        setlogin(true);
+        // setlogin(true);
         setbtnclick(true);
         const { email, password } = signinp;
 
@@ -37,7 +42,7 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
             return;
         }
         try {
-            setloader(true);
+            dispatch(setloader(true));
             const res = await fetch('/login', {
                 method: "POST",
                 headers: {
@@ -53,11 +58,11 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
             
             if(datae.data[0].usertype==="admin"){
                 console.log("ha admin hai");
-                setisadmin(true);
+                dispatch(setadmin(true));
             }
             if(datae.data[0].usertype==="user"){
                 console.log("ha user hai")
-                setisadmin(false);
+                dispatch(setadmin(false));
             }
             document.title = "AccuSoft - " + datae.data[0].name;
             const mail = datae.data[0].email;
@@ -65,7 +70,8 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
 
             notification.success("Login Successfully", 1300);
 
-            setlogin(true);
+            dispatch(login(true));
+            dispatch(setledger(datae.data[0].ledger));
             setleddetail(datae.data[0].ledger);
             if (datae.data[0].imgsrc == "" || !datae.data[0].imgsrc) {
                 setimgine("just.png");
@@ -73,7 +79,7 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
                 setimgine(datae.data[0].imgsrc);
             }
 
-            setexpenselist(datae.explist);
+            dispatch(setexplist(datae.explist));
             localStorage.setItem("name", username);
             localStorage.setItem("image", datae.data[0].imgsrc);
             localStorage.setItem("email", mail);
@@ -82,17 +88,10 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
         } catch (error) {
             notification.warn("No user found", 1900);
             setbtnclick(false);
-            setloader(false);
+            dispatch(setloader(false));
         }
     }
-    const testing = async () => {
-        const res = await fetch('https://kishanblogg.000webhostapp.com/auto/index.php')
-        const datae = await res.json();
-        console.log(datae);
-        // fetch('https://kishanblogg.000webhostapp.com/auto/index.php')
-        //     .then((response) => response.json())
-        //     .then((data) => console.log(data));
-    }
+
     return (
         <>
 
@@ -130,7 +129,7 @@ const Signin = ({ setlogin, setleddetail, setloader, setexpenselist, notificatio
 
                 />
                 <button disabled={btnclick} style={btnclick ? { background: "#cccccc", color: "#666666" } : { background: "#0984e3", color: "white" }} onClick={submit}>Login</button>
-                {/* <button style={btnclick ? { background: "#cccccc", color: "#666666" } : { background: "#0984e3", color: "white" }} onClick={testing}>test</button> */}
+             
             </div>
         </>
     )

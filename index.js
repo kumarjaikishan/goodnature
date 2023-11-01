@@ -1,15 +1,17 @@
 const express = require('express');
 const app = express();
+const office = require('./conn/officeexp')
 const model = require('./conn/expschema')
 const user = require('./conn/loginschema')
 const port = process.env.PORT || 5000;
 const fileupload = require('express-fileupload')
+const cors = require('cors')
 const fs = require('fs');
 
 app.use(express.json());
 require('./conn/conn')
 require('./test');
-
+app.use(cors());
 // if(process.env.NODE_ENV=='production'){
 //     const path = require('path')
 
@@ -138,8 +140,68 @@ app.post('/ledger', async (req, res) => {
     }
 })
 //    for fetching ledger  data from database
+app.get('/offledger', async (req, res) => {
+    try {
+        const result = await user.find({email:"test@gmail.com"});
+        if (result) {
+            res.json({
+                msg: "data found",
+                data: result
+            })
+        } else {
+            res.json({
+                msg: "something went wrong in db"
+            })
+        }
+    } catch (error) {
+        res.json({
+            msg: "wrong",
+            data: error
+        })
+    }
+})
 
-
+app.get('/offexpfetch', async (req, res) => {
+    try {
+        const result = await office.find();
+        if (result) {
+            res.json({
+                msg: "data found",
+                data: result
+            })
+        } else {
+            res.json({
+                msg: "something went wrong in db"
+            })
+        }
+    } catch (error) {
+        res.json({
+            msg: "wrong",
+            data: error
+        })
+    }
+})
+app.post('/offexpense', async (req, res) => {
+    const { voucher, ledger,date ,narration,amount} = req.body;
+    try {
+        const query = new office({ voucher, ledger,date ,narration,amount });
+        const result = await query.save();
+        if (result) {
+            res.json({
+                msg: "data inserted successfully"
+            })
+        } else {
+            res.json({
+                msg: "something went wrong in db"
+            })
+        }
+    } catch (error) {
+        res.json({
+            msg: "wrong",
+            data: error
+        })
+    }
+})
 
 //    for deleting exp data from database
 app.delete('/addexpense', async (req, res) => {

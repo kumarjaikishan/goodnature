@@ -203,4 +203,82 @@
 .admin tr td:nth-child(2){
     text-transform: capitalize;
 }
+@media only screen and (max-width:600px) {
+    .admin .table table th:nth-child(1),
+    .admin .table table th:nth-child(4),
+    .admin .table table th:nth-child(6),
+    .admin .table table th:nth-child(8),
+    .admin .table table th:nth-child(9),
+    .admin .table table th:nth-child(10){
+        width: 30px;
+    }
+    .admin .table table th:nth-child(9){
+        max-width: 10px ; 
+        /* background: green; */
+    }
+    .admin .table table #tablecontent td:nth-child(6),
+    .admin .table table #tablecontent td:nth-child(5){
+        font-size: 0.2em;
+    }
+    .admin .table table #tablecontent td:nth-child(2){
+        font-size: 0.2em;
+    }
+    .admin .table table #tablecontent td:nth-child(3){
+        font-size: 0.7em;
+         /* background: green; */
+        text-transform: capitalize;
+    }
+    .admin .table table th:nth-child(3){
+        width: 80px;
+    }
+    .admin .table table th:nth-child(5){
+        width: 190px;
+        /* background: green; */
+    }
+    .admin {
+        padding: 0 15px;
+        padding-bottom: 30px;
+    }
+    .admin .add {
+        height: 40px;
+    }
+    
+    .admin .add i {
+        width: 40px;
+        height: 40px;
+        font-size: 2.1em;
+        line-height: 42px;
+    }
+    .admin .head {
+        width: 100%;
+        height: 55px;
+        font-size: 14px;
+    }
 
+    .admin .head span:nth-child(1) {
+        display: none;
+    }
+
+    .admin .head span:nth-child(2) select,
+    .admin .head span:nth-child(3) input {
+        width: 110px;
+        height: 30px;
+    }
+
+    .admin .head span:nth-child(3) input {
+        width: 170px;
+    }
+    .admin .table th{
+        font-size: 08px;
+        /* background: red; */
+    }
+    .admin .table #tablecontent {
+        font-size: 0.6em;
+    }
+    .admin .table table th:nth-child(2){
+width: 30px;
+    }
+    .admin .table table th:nth-child(9){
+width: 10px;
+    }
+}
