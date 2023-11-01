@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import EmailIcon from '@mui/icons-material/Email';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { login,setloader,setadmin,setexplist,setledger } from '../../store/login';
 import {useDispatch } from 'react-redux';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 const Signin = ({  setleddetail,  notification, setimgine }) => {
     let navigate = useNavigate();
@@ -105,7 +104,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
                     value={signinp.email}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <EmailIcon />
+                            <RemoveRedEyeIcon />
                         </InputAdornment>,
 
                     }}
@@ -120,7 +119,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
                     value={signinp.password}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <VpnKeyIcon />
+                            <RemoveRedEyeIcon />
                         </InputAdornment>,
                         endAdornment: <InputAdornment position="end" style={{ cursor: "pointer" }} onClick={() => loginpass ? setloginpass(false) : setloginpass(true)}>
                             {loginpass ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}

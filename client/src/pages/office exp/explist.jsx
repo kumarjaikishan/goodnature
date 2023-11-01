@@ -1,7 +1,7 @@
 import React from 'react'
 import './explist.css';
-import EditIcon from '@mui/icons-material/Edit';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+
 
 const Explist = ({ exp, setisupdate, print, setinp, settoogle }) => {
   const edite = (val) => {
@@ -49,7 +49,7 @@ const Explist = ({ exp, setisupdate, print, setinp, settoogle }) => {
                 <td>{val.amount}</td>
                 <td>{val.narration}</td>
                 <td>{val.date}</td>
-                <td onClick={() => edite(val)}><EditIcon /></td>
+                <td onClick={() => edite(val)}><RemoveRedEyeIcon /></td>
                 <td onClick={() => see(val)}><RemoveRedEyeIcon /></td>
               </tr>
             })}
