@@ -224,7 +224,7 @@
 
     .admin .table table #tablecontent td:nth-child(6),
     .admin .table table #tablecontent td:nth-child(5) {
-        font-size: 0.2em;
+        font-size: 0.1em;
     }
 
     .admin .table table #tablecontent td:nth-child(2),
@@ -303,7 +303,7 @@
         /* width: 130px; */
     }
     .admin .table table th:nth-child(6) {
-        width: 35px;
+        width: 45px;
     }
     .admin .table table th:nth-child(8) {
         width: 15px;
