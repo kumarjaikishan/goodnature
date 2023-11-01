@@ -31,7 +31,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
     }
 
     const submit = async () => {
-        // setlogin(true);
+        // dispatch(login(true));
         setbtnclick(true);
         const { email, password } = signinp;
 
@@ -42,7 +42,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
         }
         try {
             dispatch(setloader(true));
-            const res = await fetch('/login', {
+            const res = await fetch(' http://localhost:5000/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

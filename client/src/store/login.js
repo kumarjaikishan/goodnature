@@ -7,7 +7,7 @@ const islogin = createSlice({
         head:"LogIn",
         narrow:true,
         loader:false,
-        isadmin:false,
+        isadmin:true,
         explist:[],
         ledger:[]
     },

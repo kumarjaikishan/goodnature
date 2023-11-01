@@ -53,6 +53,7 @@
 .admin .table {
     width: 100%;
     position: relative;
+    overflow-x: auto;
     /* border: 1px solid red; */
 }
 
@@ -78,10 +79,7 @@
     position: sticky;
     top: 0;
 }
-.admin .table
- {
-   overflow-x: auto;
-}
+
 
 
 .admin .table table th:nth-child(1){
@@ -273,12 +271,12 @@
 
     .admin .head span:nth-child(2) select,
     .admin .head span:nth-child(3) input {
-        width: 110px;
+        width: 90px;
         height: 30px;
     }
 
     .admin .head span:nth-child(3) input {
-        width: 170px;
+        width: 150px;
     }
 
     .admin .table th {
@@ -301,13 +299,13 @@
         width: 30px;
     }
     .admin .table table th:nth-child(4) {
-        width: 30px;
+        width: 22px;
     }
     .admin .table table th:nth-child(5) {
         /* width: 130px; */
     }
     .admin .table table th:nth-child(6) {
-        width: 45px;
+        width: 35px;
     }
     .admin .table table th:nth-child(8) {
         width: 15px;
@@ -317,5 +315,9 @@
     }
     .admin .table table th:nth-child(10) {
         width: 15px;
+    }
+    .admin .foot span{
+        font-size: 14px;
+        transform: scale(0.6);
     }
 }

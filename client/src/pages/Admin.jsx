@@ -315,7 +315,7 @@ const Admin = ({  leddetail, notification }) => {
                                 <th>S.no</th>
                                 <th>User</th>
                                 <th>Ledger</th>
-                                <th>Amount</th>
+                                <th>Amt.</th>
                                 <th>Narration</th>
                                 <th>Date</th>
                                 <th style={{ display: "none" }}>View</th>
@@ -352,7 +352,7 @@ const Admin = ({  leddetail, notification }) => {
                         </tbody>
                         <tfoot>
                             <tr id="foot">
-                                <th colSpan="1" ></th>
+                                <th colSpan="2" ></th>
                                 <th colSpan="1" >Total</th>
                                 <th colSpan="1" id="totalhere">
                                     {
@@ -364,7 +364,7 @@ const Admin = ({  leddetail, notification }) => {
                                 </th>
                                 <th colSpan="4" ></th>
                                 <th colSpan="1" id="alldelete" title="Delete"><i onClick={senddelete} className="fa fa-trash" aria-hidden="true"></i></th>
-                                <th colSpan="1" ></th>
+                                
                             </tr>
                         </tfoot>
                     </table>
