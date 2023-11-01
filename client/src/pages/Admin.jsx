@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import './admin.css';
 import swal from 'sweetalert';
 import Pagination from './addexp/pagination';
-import Modalbox from './addexp/modalbox';
 import { useNavigate } from "react-router-dom";
 import { useSelector,useDispatch } from 'react-redux';
 import { setloader,setexplist } from '../store/login';
@@ -296,7 +295,6 @@ const Admin = ({  leddetail, notification }) => {
     return (
         <>
             <div className="admin">
-                <div className="add"> <i title='Add Expense' className="fa fa-plus" onClick={() => setmodal(true)} aria-hidden="true" id='addexp'></i> </div>
                 <div className="head">
                     <span>Expense Voucher List</span>
                     <span>
@@ -316,7 +314,7 @@ const Admin = ({  leddetail, notification }) => {
                             <tr>
                                 <th>S.no</th>
                                 <th>User</th>
-                                <th>Ledger Name</th>
+                                <th>Ledger</th>
                                 <th>Amount</th>
                                 <th>Narration</th>
                                 <th>Date</th>
@@ -366,7 +364,7 @@ const Admin = ({  leddetail, notification }) => {
                                 </th>
                                 <th colSpan="4" ></th>
                                 <th colSpan="1" id="alldelete" title="Delete"><i onClick={senddelete} className="fa fa-trash" aria-hidden="true"></i></th>
-
+                                <th colSpan="1" ></th>
                             </tr>
                         </tfoot>
                     </table>
@@ -377,7 +375,6 @@ const Admin = ({  leddetail, notification }) => {
                         <Pagination currentpage={currentpage} changepageno={changepageno} totalpost={log.explist[0].length} postperpage={postperpage} />
                     </span>
                 </div>
-                <Modalbox notification={notification} setisledupdate={setisledupdate} leddetail={leddetail} fetching={fetching} init={init} setinp={setinp} setisupdate={setisupdate} setmodal={setmodal} sub={sub} modal={modal} handler={handler} inp={inp} isupdate={isupdate} />
             </div>
 
         </>
