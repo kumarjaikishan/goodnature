@@ -320,8 +320,8 @@ const Admin = ({  leddetail, notification }) => {
                                 <th>Date</th>
                                 <th style={{ display: "none" }}>View</th>
                                 <th>Edit</th>
-                                <th>Delete</th>
-                                <th>All  : <input type="checkbox" onClick={allselect} id="allcheck" /></th>
+                                <th>Del.</th>
+                                <th><input type="checkbox" onClick={allselect} id="allcheck" /></th>
                             </tr>
                         </thead>
                         <tbody id="tablecontent">
