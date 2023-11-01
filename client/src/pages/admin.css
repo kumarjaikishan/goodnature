@@ -226,16 +226,16 @@
 
     .admin .table table #tablecontent td:nth-child(6),
     .admin .table table #tablecontent td:nth-child(5) {
-        font-size: 0.1em;
+        font-size: 0.5em;
     }
 
     .admin .table table #tablecontent td:nth-child(2),
     .admin .table table #tablecontent td:nth-child(4) {
-        font-size: 0.2em;
+        font-size: 0.4em;
     }
 
     .admin .table table #tablecontent td:nth-child(3) {
-        font-size: 0.7em;
+        font-size: 0.5em;
         /* background: green; */
         text-transform: capitalize;
     }
