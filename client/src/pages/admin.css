@@ -78,6 +78,10 @@
     position: sticky;
     top: 0;
 }
+.admin .table
+ {
+   overflow-x: auto;
+}
 
 
 .admin .table table th:nth-child(1){
@@ -303,7 +307,7 @@
         /* width: 130px; */
     }
     .admin .table table th:nth-child(6) {
-        width: 45px;
+        width: 60px;
     }
     .admin .table table th:nth-child(8) {
         width: 15px;

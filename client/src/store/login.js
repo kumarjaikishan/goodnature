@@ -5,7 +5,7 @@ const islogin = createSlice({
     initialState:{
         user:false,
         head:"LogIn",
-        narrow:false,
+        narrow:true,
         loader:false,
         isadmin:false,
         explist:[],
