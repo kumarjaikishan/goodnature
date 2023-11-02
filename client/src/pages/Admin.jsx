@@ -362,9 +362,9 @@ const Admin = ({  leddetail, notification }) => {
                                     }
 
                                 </th>
-                                <th colSpan="4" ></th>
+                                <th colSpan="3" ></th>
                                 <th colSpan="1" id="alldelete" title="Delete"><i onClick={senddelete} className="fa fa-trash" aria-hidden="true"></i></th>
-                                
+                                <th colSpan="1" ></th>
                             </tr>
                         </tfoot>
                     </table>
