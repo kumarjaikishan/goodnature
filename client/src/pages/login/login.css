@@ -93,6 +93,9 @@
 .login .both button:hover{
     background: #0daef4;
 }
+.login .logine .filled{
+    color: rgb(43, 38, 38);
+}
 @media only screen and (max-width: 600px) {
     .login .box{
         position: absolute;

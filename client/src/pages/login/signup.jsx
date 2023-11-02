@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Person4Icon from '@mui/icons-material/Person4';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -84,7 +86,7 @@ const Signup = ({ setlog, notification }) => {
                     value={signinp.name}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <LocalPhoneIcon />
+                            <Person4Icon />
                         </InputAdornment>,
                     }}
                 />
@@ -97,7 +99,7 @@ const Signup = ({ setlog, notification }) => {
                     value={signinp.email}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <LocalPhoneIcon />
+                            <MailOutlineIcon />
                         </InputAdornment>,
                     }}
                 />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { login,setloader,setadmin,setexplist,setledger } from '../../store/login';
@@ -42,7 +43,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
         }
         try {
             dispatch(setloader(true));
-            const res = await fetch(' http://localhost:5000/login', {
+            const res = await fetch('/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -104,7 +105,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
                     value={signinp.email}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <RemoveRedEyeIcon />
+                            <MailOutlineIcon />
                         </InputAdornment>,
 
                     }}
@@ -119,7 +120,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
                     value={signinp.password}
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <RemoveRedEyeIcon />
+                            <VpnKeyIcon />
                         </InputAdornment>,
                         endAdornment: <InputAdornment position="end" style={{ cursor: "pointer" }} onClick={() => loginpass ? setloginpass(false) : setloginpass(true)}>
                             {loginpass ? <RemoveRedEyeIcon /> : <VisibilityOffIcon />}

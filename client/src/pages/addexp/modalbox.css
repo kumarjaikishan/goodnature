@@ -101,6 +101,7 @@
 }
 .exp .box div span:nth-child(2){
    width: 70%;
+   color: rgb(44, 40, 40);
 }
 .exp .box div span:nth-child(2) input,
 .exp .box div span:nth-child(2) select
@@ -110,6 +111,7 @@
    font-weight: 500;
    font-size: 1.03em;
    border: none;
+   color: rgb(44, 40, 40);
    outline: none;
    text-align: center;
    padding: 12px 10px;
@@ -117,7 +119,6 @@
    background: #dbe1e6;
    box-shadow: 0 0 5px #fff,
      5px 5px 10px #a7aaaf,
-    
      -5px -5px 10px #fff;
 }
 .exp .box div:last-child{
