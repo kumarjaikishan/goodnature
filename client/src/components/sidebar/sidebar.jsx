@@ -29,7 +29,7 @@ const Sidebar = () => {
     }, {
         name: "Data Alaysis",
         link: '/datanalysis',
-        logo: "fa fa-anchor"
+        logo: "fa fa-book"
     }, {
         name: "Report",
         link: '/report',
@@ -38,7 +38,7 @@ const Sidebar = () => {
     {
         name: "Print",
         link: '/print',
-        logo: "fa fa-cloud-download"
+        logo: "fa fa-print"
     }
     ]
     const fr = () => {
