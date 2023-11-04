@@ -26,42 +26,28 @@ app.use(fileupload({
     useTempFiles: true
 }))
 app.post('/photo', async (req, res) => {
-   
-    let file = req.files.file
-    let filename = file.name
-    // console.log(req.body);
-    // console.log("file added" + filename);
-    file.mv('./client/build/img/' + filename, async function  (err)  {
-        if (err) {
-            console.log(err);
+    const { userid, url } = req.body;
+    try {
+        const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: url });
+        // console.log(result);
+        if (result) {
+            res.status(201).json({
+                msg: "photo uploaded",
+                data: result
+            })
         } else {
-            const toremove = await user.findById({ _id: req.body.user });
-            var filePath = './client/build/img/' + toremove.imgsrc; 
-           
-            // console.log("success uploaded")
-            const result = await user.findByIdAndUpdate({ _id: req.body.user }, { imgsrc: filename });
-            // console.log(result);
-            if (result) {
-                res.status(201).json({
-                    msg: "photo uploaded",
-                    data: result
-                })
-            } else {
-                res.status(201).json({
-                    msg: "something wrong",
-                    data: result
-                })
-            }
-            console.log("file moved : "+toremove.imgsrc);
-            if(filePath){
-                try {
-                    fs.unlinkSync(filePath);
-                } catch (error) {
-                    
-                }
-            }
+            res.status(201).json({
+                msg: "something wrong",
+                data: result
+            })
         }
-    })
+    } catch (error) {
+        res.status(201).json({
+            msg: error,
+            data: result
+        })
+    }
+   
 })
 
 app.get('/', (req, res) => {

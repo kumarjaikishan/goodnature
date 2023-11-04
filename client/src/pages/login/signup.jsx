@@ -31,7 +31,7 @@ const Signup = ({ setlog, notification }) => {
     const submit = async (event) => {
         setbtnclick(true);
         const today = new Date;
-        const imgsrc = "";
+        const imgsrc = "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png";
         const usertype="user";
         const date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getUTCDate();
         const { name, email, phone, password, cpassword, ledger } = signinp;

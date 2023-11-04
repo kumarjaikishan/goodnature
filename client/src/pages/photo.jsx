@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import './photo.css';
-import { useSelector,useDispatch } from 'react-redux';
-import { header,setloader } from '../store/login';
+import { useSelector, useDispatch } from 'react-redux';
+import { header, setloader } from '../store/login';
 
-const Photo = ({notification,setimgine}) => {
+const Photo = ({ notification, setimgine, Api }) => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const log = useSelector((state) => state.login);
@@ -12,10 +12,10 @@ const Photo = ({notification,setimgine}) => {
         if (!log.user) {
             navigate('/login');
             return;
-          }
-          dispatch(header("Dashboard"))
+        }
+        dispatch(header("Dashboard"))
         // setloader(true);
-      }, [])
+    }, [])
     const WIDTH = 200;
     const [isfile, setisfile] = useState(false);
     let newimage;
@@ -23,7 +23,7 @@ const Photo = ({notification,setimgine}) => {
     const common = (event) => {
         let image_file = event.target.files[0] || event;
 
-        let name = Date.now()+image_file.name  ;
+        let name = Date.now() + image_file.name;
         // console.log(name);
         let reader = new FileReader
         reader.readAsDataURL(image_file)
@@ -61,7 +61,7 @@ const Photo = ({notification,setimgine}) => {
     const sub = async (event) => {
         // console.log("submit button called")
         let image_file = document.getElementById('dfe').files[0];
-        let name = Date.now()+image_file.name  ;
+        let name = Date.now() + image_file.name;
         // console.log(name);
         let reader = new FileReader
         reader.readAsDataURL(image_file)
@@ -85,21 +85,44 @@ const Photo = ({notification,setimgine}) => {
 
                 newimage = urlToFile(new_image_url, name);
                 new_image.src = new_image_url
-               
+
                 let data = new FormData();
-                let userid = localStorage.getItem("id");
                 data.append('file', newimage)
-                data.append('user', userid)
+                data.append('upload_preset', "profilepic")
+                data.append('cloud_name', "dusxlxlvm")
                 // console.log(newimage);
-                const res = await fetch('/photo', {
+                const res = await fetch('https://api.cloudinary.com/v1_1/dusxlxlvm/image/upload', {
                     method: "POST",
                     body: data
                 })
                 const resu = await res.json();
-                console.log(resu);
-                notification.success("Photo Updated Successfully",1500);
-                setimgine(name);
-                navigate('/');
+                console.log(resu.url);
+                if (resu.url) {
+                    const fcukyou = resu.url;
+                    const useride = localStorage.getItem("id");
+                    try {
+                        const rese = await fetch(`/photo`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                userid: useride,
+                                url: fcukyou
+                            })
+
+                        })
+                        const resui = await rese.json();
+                        console.log(resui);
+                        if (resui.msg == "photo uploaded") {
+                            notification.success("Photo Updated Successfully", 1500);
+                            setimgine(fcukyou);
+                            navigate('/');
+                        }
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
             }
         }
     }
