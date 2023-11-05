@@ -13,7 +13,7 @@ const Photo = ({ notification, setimgine, Api }) => {
             navigate('/login');
             return;
         }
-        dispatch(header("Dashboard"))
+        dispatch(header("Profile Update"))
         // setloader(true);
     }, [])
     const WIDTH = 200;
@@ -61,7 +61,7 @@ const Photo = ({ notification, setimgine, Api }) => {
     const sub = async (event) => {
         // console.log("submit button called")
         let image_file = document.getElementById('dfe').files[0];
-        let name = Date.now() + image_file.name;
+        let name = Date.now()+image_file.name  ;
         // console.log(name);
         let reader = new FileReader
         reader.readAsDataURL(image_file)
@@ -85,44 +85,28 @@ const Photo = ({ notification, setimgine, Api }) => {
 
                 newimage = urlToFile(new_image_url, name);
                 new_image.src = new_image_url
-
+               
                 let data = new FormData();
+                let userid = localStorage.getItem("id");
+                let imagi = localStorage.getItem("image");
                 data.append('file', newimage)
-                data.append('upload_preset', "profilepic")
-                data.append('cloud_name', "dusxlxlvm")
+                data.append('user', userid)
+                data.append('image', imagi)
                 // console.log(newimage);
-                const res = await fetch('https://api.cloudinary.com/v1_1/dusxlxlvm/image/upload', {
-                    method: "POST",
-                    body: data
-                })
-                const resu = await res.json();
-                console.log(resu.url);
-                if (resu.url) {
-                    const fcukyou = resu.url;
-                    const useride = localStorage.getItem("id");
-                    try {
-                        const rese = await fetch(`/photo`, {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                userid: useride,
-                                url: fcukyou
-                            })
-
-                        })
-                        const resui = await rese.json();
-                        console.log(resui);
-                        if (resui.msg == "photo uploaded") {
-                            notification.success("Photo Updated Successfully", 1500);
-                            setimgine(fcukyou);
-                            navigate('/');
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
+                try {
+                    const res = await fetch('http://localhost:5000/photo', {
+                        method: "POST",
+                        body: data
+                    })
+                    const resu = await res.json();
+                    console.log(resu);
+                    notification.success("Photo Updated Successfully",1500);
+                    setimgine(resu.photo);
+                    navigate('/');
+                } catch (error) {
+                    console.log(error);
                 }
+              
             }
         }
     }

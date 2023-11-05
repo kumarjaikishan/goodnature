@@ -25,7 +25,7 @@ const Navbar = ({ imgine}) => {
           <span>{log.head} </span>
         </div>
         {log.user ? <div className="info">
-        <NavLink to='/photo' > <div className="photo"><img src={ imgine} alt="" /> </div> </NavLink>
+        <NavLink to='/photo' > <div className="photo" ><img src={ imgine} alt="" /> </div> </NavLink>
           <div className="userinfo">
             <span>{username} </span>
             <span>{log.isadmin? "Admin":"Normal"}</span>

@@ -6,9 +6,12 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import Person4Icon from '@mui/icons-material/Person4';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import {useDispatch } from 'react-redux';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 const Signup = ({ setlog, notification }) => {
+    const dispatch = useDispatch();
+   
     const init = {
         name: "",
         email: "",

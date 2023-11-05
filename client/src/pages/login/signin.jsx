@@ -5,7 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { login,setloader,setadmin,setexplist,setledger } from '../../store/login';
+import { login,setloader,setadmin,setexplist,setledger,header } from '../../store/login';
 import {useDispatch } from 'react-redux';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
@@ -43,7 +43,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
         }
         try {
             dispatch(setloader(true));
-            const res = await fetch('/login', {
+            const res = await fetch('http://localhost:5000/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -55,6 +55,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
             const datae = await res.json();
             console.log(datae);
             const username = datae.data[0].name;
+            const profileurl = datae.data[0].imgsrc;
             
             if(datae.data[0].usertype==="admin"){
                 console.log("ha admin hai");

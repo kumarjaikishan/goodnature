@@ -7,11 +7,18 @@ const port = process.env.PORT || 5000;
 const fileupload = require('express-fileupload')
 const cors = require('cors')
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2
 
 app.use(express.json());
 require('./conn/conn')
 require('./test');
 app.use(cors());
+
+cloudinary.config({
+    cloud_name: 'dusxlxlvm',
+    api_key: '214119961949842',
+    api_secret: 'kAFLEVAA5twalyNYte001m_zFno'
+});
 // if(process.env.NODE_ENV=='production'){
 //     const path = require('path')
 
@@ -26,29 +33,70 @@ app.use(fileupload({
     useTempFiles: true
 }))
 app.post('/photo', async (req, res) => {
-    const { userid, url } = req.body;
-    try {
-        const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: url });
+    let file = req.files.file
+    // console.log(req.body);
+    // console.log(file);
+    cloudinary.uploader.upload(file.tempFilePath,  (error, result) => {
         // console.log(result);
-        if (result) {
-            res.status(201).json({
-                msg: "photo uploaded",
-                data: result
-            })
-        } else {
-            res.status(201).json({
-                msg: "something wrong",
-                data: result
-            })
+       const imageurl = result.secure_url;
+        const submitdata = async()=>{
+            try {
+                const result = await user.findByIdAndUpdate({ _id: req.body.user }, { imgsrc: imageurl });
+                console.log(result);
+                if (result) {
+                    if(req.body.image=="https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png"){
+
+                    }else{
+                        const hu = req.body.image.split('/');
+                        const lastwala = hu[hu.length - 1].split('.')[0];
+                        // console.log(req.body.image);
+                        // console.log(lastwala);
+                        cloudinary.uploader.destroy(lastwala,(error,result)=>{
+                            console.log(error,result);
+                        })
+
+                    }
+                    res.status(201).json({
+                        msg: "photo uploaded",
+                        data: result,
+                        photo:imageurl
+                    })
+                } 
+            } catch (error) {
+                res.status(201).json({
+                    msg: error,
+                    data: result
+                })
+            }
         }
-    } catch (error) {
-        res.status(201).json({
-            msg: error,
-            data: result
-        })
-    }
-   
+        submitdata();
+    })
+
 })
+// app.post('/photo', async (req, res) => {
+//     const { userid, url } = req.body;
+//     try {
+//         const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: url });
+//         // console.log(result);
+//         if (result) {
+//             res.status(201).json({
+//                 msg: "photo uploaded",
+//                 data: result
+//             })
+//         } else {
+//             res.status(201).json({
+//                 msg: "something wrong",
+//                 data: result
+//             })
+//         }
+//     } catch (error) {
+//         res.status(201).json({
+//             msg: error,
+//             data: result
+//         })
+//     }
+
+// })
 
 app.get('/', (req, res) => {
     app.use(express.static(path.resolve(__dirname, 'client', 'build')))
@@ -128,7 +176,7 @@ app.post('/ledger', async (req, res) => {
 //    for fetching ledger  data from database
 app.get('/offledger', async (req, res) => {
     try {
-        const result = await user.find({email:"test@gmail.com"});
+        const result = await user.find({ email: "test@gmail.com" });
         if (result) {
             res.json({
                 msg: "data found",
@@ -168,9 +216,9 @@ app.get('/offexpfetch', async (req, res) => {
     }
 })
 app.post('/offexpense', async (req, res) => {
-    const { voucher, ledger,date ,narration,amount} = req.body;
+    const { voucher, ledger, date, narration, amount } = req.body;
     try {
-        const query = new office({ voucher, ledger,date ,narration,amount });
+        const query = new office({ voucher, ledger, date, narration, amount });
         const result = await query.save();
         if (result) {
             res.json({
@@ -347,18 +395,18 @@ app.post('/login', async (req, res) => {
 //    for admin data from database
 app.get('/admin', async (req, res) => {
     // const { email, password } = req.body;
-     const query = await model.find().sort({ userid: -1 });
-            if (query) {
-                res.status(200).json({
-                    explist: query
-                })
-            }
+    const query = await model.find().sort({ userid: -1 });
+    if (query) {
+        res.status(200).json({
+            explist: query
+        })
+    }
 })
 //    for admin data from database end here
 
 //    for signup user data into database
 app.post('/signup', async (req, res) => {
-    const { name, email, phone, password, date, ledger,usertype,imgsrc } = req.body;
+    const { name, email, phone, password, date, ledger, usertype, imgsrc } = req.body;
     // console.log(email + " " + password)
     if (!name || !email || !phone || !password || !date || !ledger) {
         res.json({
@@ -366,7 +414,7 @@ app.post('/signup', async (req, res) => {
         })
     }
     try {
-        const query = new user({ name, email, phone, password, date, ledger,usertypeimgsrc });
+        const query = new user({ name, email, phone, password, date, ledger, usertypeimgsrc });
         const result = await query.save();
         if (result) {
             res.status(201).json({
