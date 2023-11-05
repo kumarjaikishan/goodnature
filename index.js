@@ -8,7 +8,7 @@ const fileupload = require('express-fileupload')
 const cors = require('cors')
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2
-const clou = require('./conn/middle');
+const cloud = require('./conn/middle2');
 
 app.use(express.json());
 require('./conn/conn')
@@ -18,7 +18,7 @@ app.use(cors());
 cloudinary.config({
     cloud_name: 'dusxlxlvm',
     api_key: '214119961949842',
-    api_secret: clou.cloud
+    api_secret: cloud
 });
 // if(process.env.NODE_ENV=='production'){
 //     const path = require('path')

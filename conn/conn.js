@@ -1,6 +1,5 @@
 const mongo = require('mongoose');
-const urie = require('./middle');
-const db =urie.db;
+const db = require('./middle');
 // console.log(urie.uri);
 mongo.set('strictQuery', false);
 mongo.connect(db).then(()=>{
