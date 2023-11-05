@@ -8,7 +8,7 @@ const fileupload = require('express-fileupload')
 const cors = require('cors')
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2
-const urie = require('./conn/mongouri');
+const clou = require('./conn/middle');
 
 app.use(express.json());
 require('./conn/conn')
@@ -18,7 +18,7 @@ app.use(cors());
 cloudinary.config({
     cloud_name: 'dusxlxlvm',
     api_key: '214119961949842',
-    api_secret: urie.cloud
+    api_secret: clou.cloud
 });
 // if(process.env.NODE_ENV=='production'){
 //     const path = require('path')
@@ -33,6 +33,7 @@ const path = require('path')
 app.use(fileupload({
     useTempFiles: true
 }))
+
 app.post('/photo', async (req, res) => {
     let file = req.files.file
     // console.log(req.body);
