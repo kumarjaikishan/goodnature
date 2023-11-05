@@ -8,6 +8,7 @@ const fileupload = require('express-fileupload')
 const cors = require('cors')
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2
+const urie = require('./conn/mongouri');
 
 app.use(express.json());
 require('./conn/conn')
@@ -17,7 +18,7 @@ app.use(cors());
 cloudinary.config({
     cloud_name: 'dusxlxlvm',
     api_key: '214119961949842',
-    api_secret: 'kAFLEVAA5twalyNYte001m_zFno'
+    api_secret: urie.cloud
 });
 // if(process.env.NODE_ENV=='production'){
 //     const path = require('path')
@@ -73,30 +74,7 @@ app.post('/photo', async (req, res) => {
     })
 
 })
-// app.post('/photo', async (req, res) => {
-//     const { userid, url } = req.body;
-//     try {
-//         const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: url });
-//         // console.log(result);
-//         if (result) {
-//             res.status(201).json({
-//                 msg: "photo uploaded",
-//                 data: result
-//             })
-//         } else {
-//             res.status(201).json({
-//                 msg: "something wrong",
-//                 data: result
-//             })
-//         }
-//     } catch (error) {
-//         res.status(201).json({
-//             msg: error,
-//             data: result
-//         })
-//     }
 
-// })
 
 app.get('/', (req, res) => {
     app.use(express.static(path.resolve(__dirname, 'client', 'build')))
