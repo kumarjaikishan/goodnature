@@ -93,14 +93,14 @@ const Photo = ({ notification, setimgine, Api }) => {
                 data.append('image', imagi)
                 // console.log(newimage);
                 try {
-                    const res = await fetch('/photo', {
+                    const rese = await fetch('/photo', {
                         method: "POST",
                         body: data
                     })
-                    const resuk = await res.json();
+                    const resuk = await rese.json();
                     console.log(resuk);
                     notification.success("Photo Updated Successfully",1500);
-                    setimgine(resuk.photo);
+                    setimgine(resuk.imge);
                     navigate('/');
                 } catch (error) {
                     console.log(error);
