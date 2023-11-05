@@ -59,7 +59,6 @@ const Photo = ({ notification, setimgine, Api }) => {
     }
 
     const sub = async (event) => {
-        // console.log("submit button called")
         let image_file = document.getElementById('dfe').files[0];
         let name = Date.now()+image_file.name  ;
         // console.log(name);
@@ -98,15 +97,14 @@ const Photo = ({ notification, setimgine, Api }) => {
                         method: "POST",
                         body: data
                     })
-                    const resu = await res.json();
-                    console.log(resu);
+                    const resuk = await res.json();
+                    console.log(resuk);
                     notification.success("Photo Updated Successfully",1500);
-                    setimgine(resu.photo);
+                    setimgine(resuk.photo);
                     navigate('/');
                 } catch (error) {
                     console.log(error);
                 }
-              
             }
         }
     }

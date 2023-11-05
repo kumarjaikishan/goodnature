@@ -44,7 +44,7 @@ app.post('/photo', async (req, res) => {
         const submitdata = async()=>{
             try {
                 const result = await user.findByIdAndUpdate({ _id: req.body.user }, { imgsrc: imageurl });
-                console.log(result);
+                // console.log(result);
                 if (result) {
                     if(req.body.image=="https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png"){
 
@@ -58,14 +58,13 @@ app.post('/photo', async (req, res) => {
                         })
 
                     }
-                    res.status(201).json({
+                    res.json({
                         msg: "photo uploaded",
-                        data: result,
                         photo:imageurl
                     })
                 } 
             } catch (error) {
-                res.status(201).json({
+                res.json({
                     msg: error
                 })
             }
