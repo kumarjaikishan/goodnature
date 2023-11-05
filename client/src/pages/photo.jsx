@@ -94,7 +94,7 @@ const Photo = ({ notification, setimgine, Api }) => {
                 data.append('image', imagi)
                 // console.log(newimage);
                 try {
-                    const res = await fetch('http://localhost:5000/photo', {
+                    const res = await fetch('/photo', {
                         method: "POST",
                         body: data
                     })
