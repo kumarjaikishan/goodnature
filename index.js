@@ -54,7 +54,7 @@ app.post('/photo', async (req, res) => {
                         // console.log(req.body.image);
                         // console.log(lastwala);
                         cloudinary.uploader.destroy(lastwala,(error,result)=>{
-                            console.log(error,result);
+                            // console.log(result);
                         })
 
                     }
@@ -66,8 +66,7 @@ app.post('/photo', async (req, res) => {
                 } 
             } catch (error) {
                 res.status(201).json({
-                    msg: error,
-                    data: result
+                    msg: error
                 })
             }
         }
