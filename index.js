@@ -88,8 +88,8 @@ app.post('/photo', async (req, res) => {
 
 
 app.get('/', (req, res) => {
-    app.use(express.static(path.resolve(__dirname, 'build', 'dist')))
-    res.sendFile(path.resolve(__dirname, 'build', 'dist', 'index.html'))
+    app.use(express.static(path.resolve(__dirname, 'client', 'dist')))
+    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
 })
 // }
 
