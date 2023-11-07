@@ -118,15 +118,15 @@ const Photo = ({ notification, setimgine, Api }) => {
                             console.log(resuke);
                             if (resuke) {
                                 setimgine(result.url);
+                                notification.success("Photo Updated Successfully", 1500);
+                                navigate('/');
                             }
                         } catch (error) {
                             console.log(error)
                         }
                     }
                     // console.log(result);
-                    // notification.success("Photo Updated Successfully",1500);
-                    // setimgine(resuk.imge);
-                    // navigate('/');
+
                 } catch (error) {
                     console.log(error);
                 }
