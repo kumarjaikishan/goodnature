@@ -97,7 +97,7 @@ const Photo = ({ notification, setimgine, Api }) => {
                         method: "POST",
                         body: data
                     })
-                    const resuk = await rese.json();
+                    // const resuk = await rese.json();
                     console.log(resuk);
                     // notification.success("Photo Updated Successfully",1500);
                     // setimgine(resuk.imge);
