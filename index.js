@@ -38,12 +38,10 @@ app.post('/photo', async (req, res) => {
     // let filen = req.files.photo
     // console.log(req.body);
     // console.log(file);
-    res.json({
+    res.status(201).json({
         msg: "photo updated",
         imge: "hi"
     })
-
-
 })
 // app.post('/photo', async (req, res) => {
 //     let file = req.files.file

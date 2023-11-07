@@ -64,12 +64,12 @@ const Photo = ({ notification, setimgine, Api }) => {
         let userid = localStorage.getItem("id");
         let imagi = localStorage.getItem("image");
 
-        data.append('photo', image_file)
-        data.append('user', userid)
-        data.append('image', imagi)
+        data.append('file', image_file)
+        data.append('upload_preset', "profilepic")
+        data.append('"cloud_name"', "dusxlxlvm")
         // console.log(newimage);
         try {
-            const res = await fetch('/photo', {
+            const res = await fetch('https://api.cloudinary.com/v1_1/dusxlxlvm/image/upload', {
                 method: "POST",
                 body:  data,
             })
