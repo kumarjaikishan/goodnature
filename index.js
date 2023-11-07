@@ -35,14 +35,38 @@ app.use(fileupload({
 }))
 
 app.post('/photo', async (req, res) => {
-    // let filen = req.files.photo
     // console.log(req.body);
-    // console.log(file);
-    res.status(201).json({
-        msg: "photo updated",
-        imge: "hi"
-    })
+    const old = req.body.oldimage
+    const newly = req.body.newimage
+    const userid = req.body.userid
+    try {
+        const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: newly });
+        console.log(result);
+        if (result) {
+            const hu = old.split('/');
+            const lastwala = hu[hu.length - 1].split('.')[0];
+            // console.log(req.body.image);
+            // console.log(lastwala);
+           await cloudinary.uploader.destroy(lastwala, (error, result) => {
+                // console.log(error);
+                console.log(result);
+                if(result){
+                    res.json({
+                        msg: "photo updated"
+                    })
+                }
+               
+            })
+          
+        }
+
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+    }
 })
+
 // app.post('/photo', async (req, res) => {
 //     let file = req.files.file
 //     // console.log(req.body);

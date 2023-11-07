@@ -58,20 +58,20 @@ const Photo = ({ notification, setimgine, Api }) => {
         common(event);
     }
 
-    const sub = async () => {
+    const sube = async () => {
         let image_file = document.getElementById('dfe').files[0];
         let data = new FormData();
         let userid = localStorage.getItem("id");
         let imagi = localStorage.getItem("image");
 
-        data.append('file', image_file)
+        data.append('photo', image_file)
         data.append('upload_preset', "profilepic")
         data.append('"cloud_name"', "dusxlxlvm")
         // console.log(newimage);
         try {
             const res = await fetch('https://api.cloudinary.com/v1_1/dusxlxlvm/image/upload', {
                 method: "POST",
-                body:  data,
+                body: data,
             })
             const result = await res.json();
             console.log(result);
@@ -82,6 +82,81 @@ const Photo = ({ notification, setimgine, Api }) => {
             console.log(error);
         }
     }
+    const sub = async (event) => {
+        let image_file = document.getElementById('dfe').files[0];
+        let name = Date.now() + image_file.name;
+        // console.log(name);
+        let reader = new FileReader
+        reader.readAsDataURL(image_file)
+        reader.onload = async (event) => {
+            let image_url = event.target.result
+            let image = document.createElement('img');
+            image.src = image_url;
+            // document.querySelector("#wrapper").appendChild(image)
+            image.onload = async (e) => {
+                let canvas = document.createElement("canvas")
+                let ratio = WIDTH / e.target.width
+                canvas.width = WIDTH
+                canvas.height = e.target.height * ratio
+                //    console.log(canvas.height)
+                const context = canvas.getContext("2d")
+                context.drawImage(image, 0, 0, canvas.width, canvas.height)
+
+                let new_image_url = context.canvas.toDataURL("image/jpeg", 100)
+
+                let new_image = document.createElement("img");
+
+                newimage = urlToFile(new_image_url, name);
+                new_image.src = new_image_url
+
+                let data = new FormData();
+                let userid = localStorage.getItem("id");
+                let imagi = localStorage.getItem("image");
+
+                data.append('file', newimage)
+                data.append('upload_preset', "profilepic")
+                data.append('"cloud_name"', "dusxlxlvm")
+                // console.log(newimage);
+                try {
+                    const res = await fetch('https://api.cloudinary.com/v1_1/dusxlxlvm/image/upload', {
+                        method: "POST",
+                        body: data,
+                    })
+                    const result = await res.json();
+                    console.log(result)
+                    if (result.url) {
+                        try {
+                            const resultfgg = await fetch('/photo', {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    userid: userid,
+                                    oldimage: imagi,
+                                    newimage: result.url
+                                })
+                            })
+                            const resuke = await resultfgg.json();
+                            console.log(resuke);
+                            if(resuke){
+                                setimgine(result.url);
+                            }
+                        } catch (error) {
+                            console.log(error)
+                        }
+                    }
+                    // console.log(result);
+                    // notification.success("Photo Updated Successfully",1500);
+                    // setimgine(resuk.imge);
+                    // navigate('/');
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+    }
+
     // const sub = async (event) => {
     //     let image_file = document.getElementById('dfe').files[0];
     //     let name = Date.now()+image_file.name  ;
