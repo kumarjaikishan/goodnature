@@ -99,9 +99,9 @@ const Photo = ({ notification, setimgine, Api }) => {
                     })
                     const resuk = await rese.json();
                     console.log(resuk);
-                    notification.success("Photo Updated Successfully",1500);
-                    setimgine(resuk.imge);
-                    navigate('/');
+                    // notification.success("Photo Updated Successfully",1500);
+                    // setimgine(resuk.imge);
+                    // navigate('/');
                 } catch (error) {
                     console.log(error);
                 }

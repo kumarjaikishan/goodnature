@@ -40,36 +40,52 @@ app.post('/photo', async (req, res) => {
     // console.log(file);
     cloudinary.uploader.upload(file.tempFilePath, (error, result) => {
         // console.log(result);
+        res.json({
+            msg: "photo updated",
+            imge:result
+        })
         const imageurl = result.secure_url;
-        const submitdata = async () => {
-            try {
-                const result = await user.findByIdAndUpdate({ _id: req.body.user }, { imgsrc: imageurl });
-                // console.log(result);
-                if (result) {
-                    if (!req.body.image == "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png") {
-                        const hu = req.body.image.split('/');
-                        const lastwala = hu[hu.length - 1].split('.')[0];
-                        // console.log(req.body.image);
-                        // console.log(lastwala);
-                        cloudinary.uploader.destroy(lastwala, (error, result) => {
-                            // console.log(result);
-                        })
-                    }
-                    res.json({
-                        msg: "photo updated",
-                        imge:imageurl
-                    })
-                }
-            } catch (error) {
-                res.json({
-                    msg: error
-                })
-            }
-        }
+       
         submitdata();
     })
 
 })
+// app.post('/photo', async (req, res) => {
+//     let file = req.files.file
+//     // console.log(req.body);
+//     // console.log(file);
+//     cloudinary.uploader.upload(file.tempFilePath, (error, result) => {
+//         // console.log(result);
+//         const imageurl = result.secure_url;
+//         const submitdata = async () => {
+//             try {
+//                 const result = await user.findByIdAndUpdate({ _id: req.body.user }, { imgsrc: imageurl });
+//                 // console.log(result);
+//                 if (result) {
+//                     if (!req.body.image == "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png") {
+//                         const hu = req.body.image.split('/');
+//                         const lastwala = hu[hu.length - 1].split('.')[0];
+//                         // console.log(req.body.image);
+//                         // console.log(lastwala);
+//                         cloudinary.uploader.destroy(lastwala, (error, result) => {
+//                             // console.log(result);
+//                         })
+//                     }
+//                     res.json({
+//                         msg: "photo updated",
+//                         imge:imageurl
+//                     })
+//                 }
+//             } catch (error) {
+//                 res.json({
+//                     msg: error
+//                 })
+//             }
+//         }
+//         submitdata();
+//     })
+
+// })
 
 
 app.get('/', (req, res) => {
