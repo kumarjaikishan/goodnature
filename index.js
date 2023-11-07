@@ -35,12 +35,12 @@ app.use(fileupload({
 }))
 
 app.post('/photo', async (req, res) => {
-    let filen = req.files.photo
+    // let filen = req.files.photo
     // console.log(req.body);
     // console.log(file);
     res.json({
         msg: "photo updated",
-        imge: imageurl
+        imge: "hi"
     })
 
 
