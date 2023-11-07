@@ -4,7 +4,7 @@ import './photo.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { header, setloader } from '../store/login';
 
-const Photo = ({ notification, setimgine, Api }) => {
+const Photo = ({ notification, setimgine,imgine }) => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const log = useSelector((state) => state.login);
@@ -88,7 +88,6 @@ const Photo = ({ notification, setimgine, Api }) => {
 
                 let data = new FormData();
                 let userid = localStorage.getItem("id");
-                let imagi = localStorage.getItem("image");
 
                 data.append('file', newimage)
                 data.append('upload_preset', "profilepic")
@@ -110,7 +109,7 @@ const Photo = ({ notification, setimgine, Api }) => {
                                 },
                                 body: JSON.stringify({
                                     userid: userid,
-                                    oldimage: imagi,
+                                    oldimage: imgine,
                                     newimage: result.url
                                 })
                             })

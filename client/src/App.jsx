@@ -58,7 +58,7 @@ function App() {
           <Route path="/addexpense" element={<Addexp notification={notification}  setleddetail={setleddetail} leddetail={leddetail} />} />
               <Route path="/datanalysis" element={<Datanalysis leddetail={leddetail}  />} />
               <Route path="/report" element={<Report  leddetail={leddetail}  />} />
-              <Route path="/photo" element={<Photo setimgine={setimgine} notification={notification} />} />
+              <Route path="/photo" element={<Photo imgine={imgine} setimgine={setimgine} notification={notification} />} />
               <Route path="/login" element={<Login  setimgine={setimgine}  setleddetail={setleddetail} notification={notification} />} />
               <Route path="/logout" element={<Logout setleddetail={setleddetail}  />} />
               <Route path="/admin" element={<Admin notification={notification}   setleddetail={setleddetail} leddetail={leddetail} />} />

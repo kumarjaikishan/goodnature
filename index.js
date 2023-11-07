@@ -41,23 +41,28 @@ app.post('/photo', async (req, res) => {
     const userid = req.body.userid
     try {
         const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: newly });
-        console.log(result);
+        // console.log(result);
         if (result) {
-            const hu = old.split('/');
-            const lastwala = hu[hu.length - 1].split('.')[0];
-            // console.log(req.body.image);
-            // console.log(lastwala);
-           await cloudinary.uploader.destroy(lastwala, (error, result) => {
-                // console.log(error);
-                // console.log(result);
-                if(result){
-                    res.json({
-                        msg: "photo updated"
-                    })
-                }
-               
-            })
-          
+            if (old === "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png") {
+                res.json({
+                    msg: "photo updated"
+                })
+            }else{
+                const hu = old.split('/');
+                const lastwala = hu[hu.length - 1].split('.')[0];
+                // console.log(req.body.image);
+                // console.log(lastwala);
+                await cloudinary.uploader.destroy(lastwala, (error, result) => {
+                    // console.log(error);
+                    console.log(result);
+                    if (result) {
+                        res.json({
+                            msg: "photo updated"
+                        })
+                    }
+
+                })
+            }
         }
 
     } catch (error) {

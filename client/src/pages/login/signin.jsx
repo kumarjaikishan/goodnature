@@ -5,20 +5,20 @@ import InputAdornment from '@mui/material/InputAdornment';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { login,setloader,setadmin,setexplist,setledger,header } from '../../store/login';
-import {useDispatch } from 'react-redux';
+import { login, setloader, setadmin, setexplist, setledger, header } from '../../store/login';
+import { useDispatch } from 'react-redux';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
-const Signin = ({  setleddetail,  notification, setimgine }) => {
+const Signin = ({ setleddetail, notification, setimgine }) => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const init = {
         email: "",
         password: ""
-    } 
+    }
     useEffect(() => {
         dispatch(setloader(false));
-       }, [])
+    }, [])
     const [signinp, setsigninp] = useState(init);
     const [loginpass, setloginpass] = useState(true);
     const [btnclick, setbtnclick] = useState(false);
@@ -56,12 +56,12 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
             console.log(datae);
             const username = datae.data[0].name;
             const profileurl = datae.data[0].imgsrc;
-            
-            if(datae.data[0].usertype==="admin"){
+
+            if (datae.data[0].usertype === "admin") {
                 console.log("ha admin hai");
                 dispatch(setadmin(true));
             }
-            if(datae.data[0].usertype==="user"){
+            if (datae.data[0].usertype === "user") {
                 console.log("ha user hai")
                 dispatch(setadmin(false));
             }
@@ -74,11 +74,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
             dispatch(login(true));
             dispatch(setledger(datae.data[0].ledger));
             setleddetail(datae.data[0].ledger);
-            if (datae.data[0].imgsrc == "" || !datae.data[0].imgsrc) {
-                setimgine("just.png");
-            } else {
-                setimgine(datae.data[0].imgsrc);
-            }
+            setimgine(datae.data[0].imgsrc);
 
             dispatch(setexplist(datae.explist));
             localStorage.setItem("name", username);
@@ -130,7 +126,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
 
                 />
                 <button disabled={btnclick} style={btnclick ? { background: "#cccccc", color: "#666666" } : { background: "#0984e3", color: "white" }} onClick={submit}>Login</button>
-             
+
             </div>
         </>
     )
