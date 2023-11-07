@@ -99,7 +99,7 @@ const Photo = ({ notification, setimgine,imgine }) => {
                         body: data,
                     })
                     const result = await res.json();
-                    console.log(result)
+                    // console.log(result)
                     if (result.url) {
                         try {
                             const resultfgg = await fetch('/photo', {
