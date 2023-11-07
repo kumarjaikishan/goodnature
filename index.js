@@ -27,7 +27,8 @@ cloudinary.config({
 //         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
 //     })
 // }else{
-const path = require('path')
+const path = require('path');
+const { log } = require('console');
 
 app.use(fileupload({
     useTempFiles: true
@@ -42,10 +43,7 @@ app.post('/photo', async (req, res) => {
         // console.log(result);
         fileurl=result.secure_url;
     })
-    res.status(200).send({
-        msg: "photo updated",
-        imge: fileurl
-    })
+   
 
 })
 // app.post('/photo', async (req, res) => {
