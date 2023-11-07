@@ -21,7 +21,7 @@ import Officeexp from './pages/officeexp';
 function App() {
   const dispatch = useDispatch();
   const [leddetail, setleddetail] = useState([]);
-  const [imgine, setimgine] = useState("just.png");
+  const [imgine, setimgine] = useState("");
 
   const log = useSelector((state) => state.login);
   const notification = {
