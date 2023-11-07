@@ -64,7 +64,7 @@ const Photo = ({ notification, setimgine, Api }) => {
         let userid = localStorage.getItem("id");
         let imagi = localStorage.getItem("image");
 
-        data.append('file', image_file)
+        data.append('photo', image_file)
         data.append('user', userid)
         data.append('image', imagi)
         // console.log(newimage);
