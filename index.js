@@ -40,13 +40,13 @@ app.post('/photo', async (req, res) => {
     // console.log(file);
     cloudinary.uploader.upload(file.tempFilePath, (error, result) => {
         // console.log(result);
-        res.json({
-            msg: "photo updated",
-            imge:result.secure_url
-        })
-        const imageurl = result.secure_url;
-       
-        submitdata();
+        if(result){
+            res.json({
+                msg: "photo updated",
+                imge:result.secure_url
+            })
+        }
+    
     })
 
 })
