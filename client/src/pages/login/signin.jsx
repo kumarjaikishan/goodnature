@@ -69,7 +69,7 @@ const Signin = ({  setleddetail,  notification, setimgine }) => {
             const mail = datae.data[0].email;
             const id = datae.data[0]._id;
 
-            notification.success("Login Successfully", 1300);
+            // notification.success("Login Successfully", 1300);
 
             dispatch(login(true));
             dispatch(setledger(datae.data[0].ledger));
