@@ -49,7 +49,7 @@ app.post('/photo', async (req, res) => {
             // console.log(lastwala);
            await cloudinary.uploader.destroy(lastwala, (error, result) => {
                 // console.log(error);
-                console.log(result);
+                // console.log(result);
                 if(result){
                     res.json({
                         msg: "photo updated"
@@ -330,7 +330,7 @@ app.post('/updateexpledger', async (req, res) => {
     const userid = req.body.userid;
     const oldledger = req.body.oldledger;
     const newledger = req.body.newledger;
-    console.log(userid + " " + action + "  " + oldledger + " " + newledger);
+    // console.log(userid + " " + action + "  " + oldledger + " " + newledger);
     if (action == "update") {
         const result = await model.updateMany({ userid, ledger: oldledger }, { ledger: newledger })
         // console.log(result);
