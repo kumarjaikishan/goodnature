@@ -42,7 +42,7 @@ app.post('/photo', async (req, res) => {
         // console.log(result);
         res.json({
             msg: "photo updated",
-            imge:result
+            imge:result.secure_url
         })
         const imageurl = result.secure_url;
        
