@@ -58,54 +58,80 @@ const Photo = ({ notification, setimgine, Api }) => {
         common(event);
     }
 
-    const sub = async (event) => {
+    const sub = async () => {
         let image_file = document.getElementById('dfe').files[0];
-        let name = Date.now()+image_file.name  ;
-        // console.log(name);
-        let reader = new FileReader
-        reader.readAsDataURL(image_file)
-        reader.onload = async (event) => {
-            let image_url = event.target.result
-            let image = document.createElement('img');
-            image.src = image_url;
-            // document.querySelector("#wrapper").appendChild(image)
-            image.onload = async (e) => {
-                let canvas = document.createElement("canvas")
-                let ratio = WIDTH / e.target.width
-                canvas.width = WIDTH
-                canvas.height = e.target.height * ratio
-                //    console.log(canvas.height)
-                const context = canvas.getContext("2d")
-                context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        let data = new FormData();
+        let userid = localStorage.getItem("id");
+        let imagi = localStorage.getItem("image");
 
-                let new_image_url = context.canvas.toDataURL("image/jpeg", 100)
-
-                let new_image = document.createElement("img");
-
-                newimage = urlToFile(new_image_url, name);
-                new_image.src = new_image_url
-               
-                let data = new FormData();
-                let userid = localStorage.getItem("id");
-                let imagi = localStorage.getItem("image");
-                data.append('file', newimage)
-                data.append('user', userid)
-                data.append('image', imagi)
-                // console.log(newimage);
-                
-                    const rese = await fetch('/photo', {
-                        method: "POST",
-                        body: data
-                    })
-                    const resuk = await rese.json();
-                    console.log(resuk);
-                    // notification.success("Photo Updated Successfully",1500);
-                    // setimgine(resuk.imge);
-                    // navigate('/');
-               
-            }
+        data.append('file', image_file)
+        data.append('user', userid)
+        data.append('image', imagi)
+        // console.log(newimage);
+        try {
+            const res = await fetch('/photo', {
+                method: "POST",
+                body: data
+            })
+            const resut = await res.json();
+            console.log(resut);
+            // notification.success("Photo Updated Successfully",1500);
+            // setimgine(resuk.imge);
+            // navigate('/');
+        } catch (error) {
+            console.log(error);
         }
     }
+    // const sub = async (event) => {
+    //     let image_file = document.getElementById('dfe').files[0];
+    //     let name = Date.now()+image_file.name  ;
+    //     // console.log(name);
+    //     let reader = new FileReader
+    //     reader.readAsDataURL(image_file)
+    //     reader.onload = async (event) => {
+    //         let image_url = event.target.result
+    //         let image = document.createElement('img');
+    //         image.src = image_url;
+    //         // document.querySelector("#wrapper").appendChild(image)
+    //         image.onload = async (e) => {
+    //             let canvas = document.createElement("canvas")
+    //             let ratio = WIDTH / e.target.width
+    //             canvas.width = WIDTH
+    //             canvas.height = e.target.height * ratio
+    //             //    console.log(canvas.height)
+    //             const context = canvas.getContext("2d")
+    //             context.drawImage(image, 0, 0, canvas.width, canvas.height)
+
+    //             let new_image_url = context.canvas.toDataURL("image/jpeg", 100)
+
+    //             let new_image = document.createElement("img");
+
+    //             newimage = urlToFile(new_image_url, name);
+    //             new_image.src = new_image_url
+
+    //             let data = new FormData();
+    //             let userid = localStorage.getItem("id");
+    //             let imagi = localStorage.getItem("image");
+    //             data.append('file', newimage)
+    //             data.append('user', userid)
+    //             data.append('image', imagi)
+    //             // console.log(newimage);
+    //             try {
+    //                 const rese = await fetch('/photo', {
+    //                     method: "POST",
+    //                     body: data
+    //                 })
+    //                 const resuk = await rese.json();
+    //                 console.log(resuk);
+    //                 // notification.success("Photo Updated Successfully",1500);
+    //                 // setimgine(resuk.imge);
+    //                 // navigate('/');
+    //             } catch (error) {
+    //                 console.log(error);
+    //             }
+    //         }
+    //     }
+    // }
 
     const urlToFile = (url, naam) => {
         let arr = url.split(",");
