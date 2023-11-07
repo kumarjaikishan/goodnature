@@ -8,7 +8,6 @@ const fileupload = require('express-fileupload')
 const cors = require('cors')
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2
-const cloud = require('./conn/middle2');
 
 app.use(express.json());
 require('./conn/conn')
