@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import './photo.css';
@@ -168,18 +169,7 @@ const Photo = ({ notification, setimgine, Api }) => {
 
     return (
         <>
-            <div className="photo">
-                <div className="box">
-                    <input type="file" onChange={hi} name="" id="dfe" />
-                    {/* <input type="file"  name="" id="here" /> */}
-                    <div id="wrapper">
-                    </div>
-                    <div id='btn'>
-                        <button onClick={sub} style={isfile ? xdfvf : dfvfdv}  ><i className="fa fa-cloud-upload" aria-hidden="true"></i>Upload</button>
-                        {isfile ? <button onClick={reset} style={isfile ? xdfvf : dfvfdv}  ><i className="fa fa-undo" aria-hidden="true"></i>Clear</button> : null}
-                    </div>
-                </div>
-            </div>
+            
         </>
     )
 }
