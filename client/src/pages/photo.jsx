@@ -71,7 +71,7 @@ const Photo = ({ notification, setimgine, Api }) => {
         try {
             const res = await fetch('/photo', {
                 method: "POST",
-                body: data
+                body:  data,
             })
             const result = await res.json();
             console.log(result);
