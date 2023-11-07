@@ -42,9 +42,9 @@ app.post('/photo', async (req, res) => {
         // console.log(result);
         fileurl=result.secure_url;
     })
-    res.send({
+    res.status(200).send({
         msg: "photo updated",
-        imge:fileurl
+        imge: fileurl
     })
 
 })
