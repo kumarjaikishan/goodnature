@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
-const office = require('./conn/officeexp')
-const model = require('./conn/expschema')
-const user = require('./conn/loginschema')
+// const office = require('./conn/officeexp')
+const promoter = require('./modals/promote_modal')
+const customer = require('./modals/customer_model')
+const user = require('./modals/login_modal')
 const port = process.env.PORT || 5000;
 const fileupload = require('express-fileupload')
 const cors = require('cors')
@@ -20,14 +21,7 @@ cloudinary.config({
     api_key: '214119961949842',
     api_secret: "kAFLEVAA5twalyNYte001m_zFno"
 });
-// if(process.env.NODE_ENV=='production'){
-//     const path = require('path')
 
-//     app.get('/',(req,res)=>{
-//         app.use(express.static(path.resolve(__dirname,'client','build')))
-//         res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-//     })
-// }else{
 const path = require('path');
 const { log } = require('console');
 
@@ -35,399 +29,19 @@ app.use(fileupload({
     useTempFiles: true
 }))
 
-app.post('/photo', async (req, res) => {
-    // console.log(req.body);
-    const old = req.body.oldimage
-    const newly = req.body.newimage
-    const userid = req.body.userid
-    try {
-        const result = await user.findByIdAndUpdate({ _id: userid }, { imgsrc: newly });
-        // console.log(result);
-        if (result) {
-            if (old === "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png") {
-                res.json({
-                    msg: "photo updated"
-                })
-            }else{
-                const hu = old.split('/');
-                const lastwala = hu[hu.length - 1].split('.')[0];
-                // console.log(req.body.image);
-                // console.log(lastwala);
-                await cloudinary.uploader.destroy(lastwala, (error, result) => {
-                    // console.log(error);
-                    console.log(result);
-                    if (result) {
-                        res.json({
-                            msg: "photo updated"
-                        })
-                    }
-
-                })
-            }
-        }
-
-    } catch (error) {
-        res.json({
-            msg: error
-        })
-    }
-})
-
-// app.post('/photo', async (req, res) => {
-//     let file = req.files.file
-//     // console.log(req.body);
-//     // console.log(file);
-//     cloudinary.uploader.upload(file.tempFilePath, (error, result) => {
-//         // console.log(result);
-//         const imageurl = result.secure_url;
-//         const submitdata = async () => {
-//             try {
-//                 const result = await user.findByIdAndUpdate({ _id: req.body.user }, { imgsrc: imageurl });
-//                 // console.log(result);
-//                 if (result) {
-//                     if (!req.body.image == "https://res.cloudinary.com/dusxlxlvm/image/upload/v1699090690/just_yoljye.png") {
-//                         const hu = req.body.image.split('/');
-//                         const lastwala = hu[hu.length - 1].split('.')[0];
-//                         // console.log(req.body.image);
-//                         // console.log(lastwala);
-//                         cloudinary.uploader.destroy(lastwala, (error, result) => {
-//                             // console.log(result);
-//                         })
-//                     }
-//                     res.json({
-//                         msg: "photo updated",
-//                         imge:imageurl
-//                     })
-//                 }
-//             } catch (error) {
-//                 res.json({
-//                     msg: error
-//                 })
-//             }
-//         }
-//         submitdata();
-//     })
-
-// })
-
-
 app.get('/', (req, res) => {
     app.use(express.static(path.resolve(__dirname, 'client', 'build')))
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
 })
-// }
 
 
-//    for adding expense data into database
-app.post('/addexpense', async (req, res) => {
-    const { userid, ledger, date, amount, narration } = req.body;
-    if (!userid || !ledger || !date || !amount || !narration) {
-        res.json({
-            msg: "all fields are required"
-        })
-    } else {
-        const query = new model({ userid, ledger, date, amount, narration });
-        const result = await query.save();
-        if (result) {
-            res.json({
-                msg: "data inserted successfully"
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    }
-
-})
-//    for adding expense data into database ends here
-
-
-//    for fetching all expense data from database
-app.post('/explist', async (req, res) => {
-    const userid = req.body.userid;
-    try {
-        const result = await model.find({ userid }).sort({ date: -1 });
-        if (result) {
-            res.json({
-                msg: "data found",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-
-})
-//    for fetching all expense data from database ends here
-
-
-//    for fetching ledger  data from database
-app.post('/ledger', async (req, res) => {
-    const { userid, ledger } = req.body;
-    // console.log(userid,ledger)
-    const result = await model.find({ userid, ledger });
-    // console.log(result)
-    if (result) {
-        res.json({
-            msg: "data found",
-            data: result
-        })
-    } else {
-        res.json({
-            msg: "something went wrong in db"
-        })
-    }
-})
-//    for fetching ledger  data from database
-app.get('/offledger', async (req, res) => {
-    try {
-        const result = await user.find({ email: "test@gmail.com" });
-        if (result) {
-            res.json({
-                msg: "data found",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-})
-
-app.get('/offexpfetch', async (req, res) => {
-    try {
-        const result = await office.find();
-        if (result) {
-            res.json({
-                msg: "data found",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-})
-app.post('/offexpense', async (req, res) => {
-    const { voucher, ledger, date, narration, amount } = req.body;
-    try {
-        const query = new office({ voucher, ledger, date, narration, amount });
-        const result = await query.save();
-        if (result) {
-            res.json({
-                msg: "data inserted successfully"
-            })
-        } else {
-            res.json({
-                msg: "something went wrong in db"
-            })
-        }
-    } catch (error) {
-        res.json({
-            msg: "wrong",
-            data: error
-        })
-    }
-})
-
-//    for deleting exp data from database
-app.delete('/addexpense', async (req, res) => {
-    const _id = req.body.id;
-    const result = await model.findByIdAndDelete({ _id });
-    if (result) {
-        res.json({
-            msg: "data deleted",
-            data: result
-        })
-    } else {
-        res.json({
-            msg: "something went wrong in db"
-        })
-    }
-})
-//    for deleting exp data from database ends here
-
-//    for deletingMany exp data from database
-app.delete('/delmany', async (req, res) => {
-    const id = req.body.id;
-    if (!id) {
-        res.json({
-            msg: "Send some id",
-        })
-    }
-    const result = await model.deleteMany({
-        _id: { $in: id }
-    });
-    if (result) {
-        res.json({
-            msg: "data deleted",
-            data: result
-        })
-    } else {
-        res.json({
-            msg: "something went wrong in db"
-        })
-    }
-})
-//    for deletingMany exp data from database ends here
-
-
-//    for updateing exp data into database
-app.patch('/addexpense', async (req, res) => {
-    const { _id, ledger, date, amount, narration } = req.body;
-    // console.log(_id,ledger, date, amount, narration);
-    const result = await model.findByIdAndUpdate({ _id }, { ledger, date, amount, narration });
-    if (result) {
-        res.json({
-            msg: "data deleted",
-            data: result
-        })
-    } else {
-        res.json({
-            msg: "something went wrong in db"
-        })
-    }
-})
-//    for updateing exp data into database ends here
-
-//    for fetching exp data from database
-app.post('/data', async (req, res) => {
-    const _id = req.body.id;
-    // console.log(_id)
-    const result = await model.find({ _id });
-    if (result) {
-        res.json({
-            msg: "data found",
-            data: result
-        })
-    } else {
-        res.json({
-            msg: "something went wrong"
-        })
-    }
-})
-//    for fetching exp data from database ends here
-
-
-
-//    for update expense legere data into database
-app.post('/updateexpledger', async (req, res) => {
-    const action = req.body.action;
-    const userid = req.body.userid;
-    const oldledger = req.body.oldledger;
-    const newledger = req.body.newledger;
-    // console.log(userid + " " + action + "  " + oldledger + " " + newledger);
-    if (action == "update") {
-        const result = await model.updateMany({ userid, ledger: oldledger }, { ledger: newledger })
-        // console.log(result);
-        if (result) {
-            res.json({
-                msg: "ledger Updated in expense",
-                data: result
-            })
-        } else {
-            res.json({
-                msg: "something went wrong"
-            })
-        }
-    }
-    if (action == "delete") {
-        try {
-            const result = await model.deleteMany({ userid, ledger: oldledger })
-            // console.log(result);
-            if (result) {
-                res.json({
-                    msg: "ledger Updated",
-                    data: result
-                })
-            } else {
-                res.json({
-                    msg: "something went wrong"
-                })
-            }
-        } catch (error) {
-            res.send(error);
-        }
-
-    }
-
-})
-//    for update expense legere data into database ends here
-
-
-//    for login user data from database
-app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const result = await user.find({ email, password });
-        if (result.length) {
-            const userid = result[0]._id;
-            const query = await model.find({ userid }).sort({ date: -1 });
-            if (query) {
-                res.status(200).json({
-                    login: true,
-                    data: result,
-                    explist: query
-                })
-            }
-        } else {
-            res.status(200).json({
-                login: false,
-            })
-        }
-    } catch (error) {
-        res.status(500).json({
-            msg: "NO USER FOUND",
-        })
-    }
-
-})
-//    for login user data from database end here
-
-
-//    for admin data from database
-app.get('/admin', async (req, res) => {
-    // const { email, password } = req.body;
-    const query = await model.find().sort({ userid: -1 });
-    if (query) {
-        res.status(200).json({
-            explist: query
-        })
-    }
-})
-//    for admin data from database end here
-
-//    for signup user data into database
+// page signup logic here
 app.post('/signup', async (req, res) => {
-    const { name, email, phone, password, date, ledger, usertype, imgsrc } = req.body;
+    const { name, email, phone, password,date } = req.body;
     // console.log(email + " " + password)
-    if (!name || !email || !phone || !password || !date || !ledger) {
-        res.json({
-            msg: "all fields are required"
-        })
-    }
+
     try {
-        const query = new user({ name, email, phone, password, date, ledger, usertypeimgsrc });
+        const query = new user({ name, email, phone, password,date });
         const result = await query.save();
         if (result) {
             res.status(201).json({
@@ -442,33 +56,137 @@ app.post('/signup', async (req, res) => {
     } catch (error) {
         res.send(error);
     }
-
-
 })
-//    for signup user data into database ends here
 
-//    for ledger detail from database
-app.post('/leg', async (req, res) => {
-    const { _id, leddetail } = req.body;
-    //    console.log(leddetail.length)
-    if (leddetail.length < 1) {
-        res.json({
-            msg: "ledger can't be empty",
+
+// page login logic here
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    // console.log(req.body);
+    try {
+        const result = await user.find({ email, password });
+        // console.log(result);
+        if (result) {
+            // const userid = result[0]._id;
+            const query = await promoter.find();
+            const consumer =  await customer.find();
+            // console.log(query);
+            // console.log(consumer);
+            if (query) {
+                res.status(200).json({
+                    login: true,
+                    data: result,
+                    promotor: query,
+                    customer:consumer
+                })
+            }
+        } else {
+            res.status(200).json({
+                login: false,
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            msg: "NO USER FOUND",
         })
     }
-    const result = await user.findByIdAndUpdate({ _id }, { ledger: leddetail });
-    if (result) {
+
+})
+
+
+// for geting promotor list
+app.post('/promotorlist', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const query = await promoter.find().sort({ date: -1 });
+        if (query) {
+            res.status(200).json({
+                promotor: query
+            })
+        }
+        else {
+            res.status(200).json({
+                login: false,
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            msg: "Promotor list not found",
+        })
+    }
+})
+// for geting promotor list ends here
+
+
+//    for adding promotor data into database
+app.post('/addpromoter', async (req, res) => {
+    const {senior, name, id, contact, address } = req.body;
+    if (!name || !id || !contact || !address || !senior) {
         res.json({
-            msg: "ledger sync",
-            data: result
+            msg: "all fields are required"
         })
     } else {
-        res.json({
-            msg: "something went wrong in db"
-        })
+        try {
+            const query = new promoter({ senior,name, id, contact, address });
+            console.log(query)
+            const result = await query.save();
+
+            res.json({
+                msg: "data inserted successfully",
+                data:result
+            })
+        } catch (error) {
+            res.json({
+                msg: error
+            })
+        }
     }
 })
-//     for ledger detail from database end here
+//    for adding promotor data into database ends here
+
+
+
+//    for adding Customer data into database
+app.post('/addcustomer', async (req, res) => {
+    const {promotor, name,  cust_id, contact, address } = req.body;
+    if (!name || ! cust_id || !contact || !address || !promotor) {
+        res.json({
+            msg: "all fields are required"
+        })
+    } else {
+        try {
+            const query = new customer({ promotor,name, cust_id, contact, address });
+            console.log(query)
+            const result = await query.save();
+
+            res.json({
+                msg: "data inserted successfully",
+                data:result
+            })
+        } catch (error) {
+            res.json({
+                msg: error
+            })
+        }
+    }
+})
+//    for Customer data into database ends here
+
+// for customer list logic
+app.post('/customerlist', async (req, res) => {
+        try {
+            const query = await customer.find();
+            // console.log(query);
+            res.json({
+                customer:query
+            })
+        } catch (error) {
+            res.json({
+                msg: error
+            })
+        }
+})
+//    for Customer list ends here
 
 
 app.listen(port, () => {

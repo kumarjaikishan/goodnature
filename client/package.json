@@ -26,6 +26,7 @@
   },
   "scripts": {
     "start": "vite",
+    "jai": "vite",
     "deploy": "gh-pages -d build",
     "build": "vite build",
     "test": "vite test",

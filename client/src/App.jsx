@@ -4,19 +4,17 @@ import Navbar from './components/navbar/navbar';
 import loadere from '../src/img/loader.png'
 import Sidebar from './components/sidebar/sidebar';
 import Home from './pages/home';
-import Addexp from './pages/addexp/addexp';
-import Datanalysis from './pages/dataanalysis';
+import Promotor from './pages/addpromotor/addpromotor';
+import Customer from './pages/addcustomer/addcustomer';
+import Booking from './pages/addcustomer/addcustomer';
 import { useState } from 'react';
 import Login from './pages/login/login';
 import Logout from './pages/logout';
-import Report from './pages/Report';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Photo from './pages/photo';
-import Admin from './pages/Admin';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setnarrow } from '../src/store/login';
-import Officeexp from './pages/officeexp';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,28 +39,28 @@ function App() {
   const sidebarclose = () => {
     const width = window.innerWidth;
     // console.log(width)
-    width < 600 ?  dispatch(setnarrow(true)) : null;
+    width < 600 ? dispatch(setnarrow(true)) : null;
   }
- 
+
 
   return (
     <>
       <ToastContainer />
 
       <div className="App" >
-        <Navbar  imgine={imgine}  />
+        <Navbar imgine={imgine} />
         <div className={log.narrow ? "main narrow" : "main"} onClick={sidebarclose}>
           <Routes>
 
-          <Route path="/" element={<Home/>} />
-          <Route path="/addexpense" element={<Addexp notification={notification}  setleddetail={setleddetail} leddetail={leddetail} />} />
-              <Route path="/datanalysis" element={<Datanalysis leddetail={leddetail}  />} />
-              <Route path="/report" element={<Report  leddetail={leddetail}  />} />
-              <Route path="/photo" element={<Photo imgine={imgine} setimgine={setimgine} notification={notification} />} />
-              <Route path="/login" element={<Login  setimgine={setimgine}  setleddetail={setleddetail} notification={notification} />} />
-              <Route path="/logout" element={<Logout setleddetail={setleddetail}  />} />
-              <Route path="/admin" element={<Admin notification={notification}   setleddetail={setleddetail} leddetail={leddetail} />} />
-              <Route path="/print" element={<Officeexp/>} />
+            <Route path="/" element={<Home />} />
+            <Route path="/promotor" element={<Promotor notification={notification} />} />
+            <Route path="/customer" element={<Customer notification={notification} />} />
+            <Route path="/booking" element={<Booking notification={notification}  />} />
+            <Route path="/photo" element={<Photo imgine={imgine} setimgine={setimgine} notification={notification} />} />
+            <Route path="/login" element={<Login setimgine={setimgine} setleddetail={setleddetail} notification={notification} />} />
+            <Route path="/logout" element={<Logout setleddetail={setleddetail} />} />
+            {/* <Route path="/admin" element={<Admin notification={notification}   setleddetail={setleddetail} leddetail={leddetail} />} />
+              <Route path="/print" element={<Officeexp/>} /> */}
           </Routes>
           <div style={{ display: log.loader ? "flex" : "none" }} className="loader"><img src={loadere} alt="" /></div>
         </div>

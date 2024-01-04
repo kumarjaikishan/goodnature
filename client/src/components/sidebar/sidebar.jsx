@@ -23,23 +23,24 @@ const Sidebar = () => {
         link: '/',
         logo: "fa fa-tachometer"
     }, {
-        name: "Expenses",
-        link: '/addexpense',
+        name: "Promotor",
+        link: '/promotor',
         logo: "fa fa-university"
     }, {
-        name: "Data Alaysis",
-        link: '/datanalysis',
+        name: "Customer",
+        link: '/customer',
         logo: "fa fa-book"
-    }, {
-        name: "Report",
-        link: '/report',
+    }, 
+    {
+        name: "Booking",
+        link: '/booking',
         logo: "fa fa-cloud-download"
     },
-    {
-        name: "Print",
-        link: '/print',
-        logo: "fa fa-print"
-    }
+    // {
+    //     name: "Print",
+    //     link: '/print',
+    //     logo: "fa fa-print"
+    // }
     ]
     const fr = () => {
         swal({

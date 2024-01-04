@@ -5,7 +5,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { login, setloader, setadmin, setexplist, setledger, header } from '../../store/login';
+import { login, setloader, setadmin, setpromotor, setcustomer, header } from '../../store/login';
 import { useDispatch } from 'react-redux';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
@@ -42,8 +42,8 @@ const Signin = ({ setleddetail, notification, setimgine }) => {
             return;
         }
         try {
-            dispatch(setloader(true));
-            const res = await fetch('/login', {
+            dispatch(setloader(false));
+            const res = await fetch('http://localhost:5000/login', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -72,11 +72,11 @@ const Signin = ({ setleddetail, notification, setimgine }) => {
             notification.success("Login Successfully", 1100);
 
             dispatch(login(true));
-            dispatch(setledger(datae.data[0].ledger));
-            setleddetail(datae.data[0].ledger);
+          
             setimgine(datae.data[0].imgsrc);
 
-            dispatch(setexplist(datae.explist));
+            dispatch(setpromotor(datae.promotor));
+            dispatch(setcustomer(datae.customer));
             localStorage.setItem("name", username);
             localStorage.setItem("image", datae.data[0].imgsrc);
             localStorage.setItem("email", mail);

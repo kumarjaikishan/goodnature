@@ -8,7 +8,8 @@ const islogin = createSlice({
         narrow:true,
         loader:false,
         isadmin:true,
-        explist:[],
+        promotor:[],
+        customer:[],
         ledger:[]
     },
     reducers:{
@@ -27,9 +28,13 @@ const islogin = createSlice({
         setadmin(state, action){
            state.isadmin = action.payload;
         },
-        setexplist(state, action){
-           state.explist=[];
-           state.explist.push(action.payload);
+        setpromotor(state, action){
+           state.promotor=[];
+           state.promotor.push(action.payload);
+        },
+        setcustomer(state, action){
+           state.customer=[];
+           state.customer.push(action.payload);
         },
         setledger(state, action){
            state.ledger=[];
@@ -38,5 +43,5 @@ const islogin = createSlice({
     }
 
 })
-export const {login,header,setnarrow,setloader,setadmin,setexplist,setledger}= islogin.actions;
+export const {login,header,setnarrow,setloader,setadmin,setpromotor,setcustomer,setledger}= islogin.actions;
 export default islogin.reducer;
